@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ylbuEClPEeiPVdzzAv5aug" name="model">
+  <eAnnotations xmi:id="_ylbuESlPEeiPVdzzAv5aug" source="genmymodel">
+    <details xmi:id="_ylbuEilPEeiPVdzzAv5aug" key="uuid" value="_UFhakClFEeiPVdzzAv5aug"/>
+    <details xmi:id="_ylbuEylPEeiPVdzzAv5aug" key="author" value="satoru27"/>
+  </eAnnotations>
+  <packageImport xmi:id="_ylbuFClPEeiPVdzzAv5aug">
+    <eAnnotations xmi:id="_ylbuFSlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuFilPEeiPVdzzAv5aug" key="uuid" value="_UFhakSlFEeiPVdzzAv5aug"/>
+    </eAnnotations>
+    <importedPackage href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#/"/>
+  </packageImport>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuFylPEeiPVdzzAv5aug" name="Buraco">
+    <eAnnotations xmi:id="_ylbuGClPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuGSlPEeiPVdzzAv5aug" key="uuid" value="_YD9IQgtzEDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbuGilPEeiPVdzzAv5aug" name="id" visibility="public">
+      <eAnnotations xmi:id="_ylbuGylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuHClPEeiPVdzzAv5aug" key="uuid" value="_2mN7QAt0EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuHSlPEeiPVdzzAv5aug" name="endereco">
+      <eAnnotations xmi:id="_ylbuHilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuHylPEeiPVdzzAv5aug" key="uuid" value="_7lQBEAt0EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuIClPEeiPVdzzAv5aug" name="tamanho" visibility="public">
+      <eAnnotations xmi:id="_ylbuISlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuIilPEeiPVdzzAv5aug" key="uuid" value="__i14AQt0EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuIylPEeiPVdzzAv5aug" name="localizacao" visibility="public">
+      <eAnnotations xmi:id="_ylbuJClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuJSlPEeiPVdzzAv5aug" key="uuid" value="_IsXoUAt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuJilPEeiPVdzzAv5aug" name="endereco" type="_ylbueilPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuJylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuKClPEeiPVdzzAv5aug" key="uuid" value="_OPvxUQt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuKSlPEeiPVdzzAv5aug" name="prioridade">
+      <eAnnotations xmi:id="_ylbuKilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuKylPEeiPVdzzAv5aug" key="uuid" value="_TBj6gAt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuLClPEeiPVdzzAv5aug" name="OrdemDeTrabalho">
+    <eAnnotations xmi:id="_ylbuLSlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuLilPEeiPVdzzAv5aug" key="uuid" value="_XL50AAt1EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_ylbuLylPEeiPVdzzAv5aug" general="_ylbuFylPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuMClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuMSlPEeiPVdzzAv5aug" key="uuid" value="_o1A_wQt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_ylbuMilPEeiPVdzzAv5aug" name="codigo">
+      <eAnnotations xmi:id="_ylbuMylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuNClPEeiPVdzzAv5aug" key="uuid" value="_qjBZsQt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuNSlPEeiPVdzzAv5aug" name="descricao">
+      <eAnnotations xmi:id="_ylbuNilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuNylPEeiPVdzzAv5aug" key="uuid" value="_tJH5QQt1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuOClPEeiPVdzzAv5aug" name="situacao">
+      <eAnnotations xmi:id="_ylbuOSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuOilPEeiPVdzzAv5aug" key="uuid" value="__W2N8At1EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuOylPEeiPVdzzAv5aug" name="equipeDeReparo">
+      <eAnnotations xmi:id="_ylbuPClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuPSlPEeiPVdzzAv5aug" key="uuid" value="_D7DY8Qt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuPilPEeiPVdzzAv5aug" name="equipamentos" type="_ylbvFilPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuPylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuQClPEeiPVdzzAv5aug" key="uuid" value="_LcjbgQt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuQSlPEeiPVdzzAv5aug" name="horasAplicadas">
+      <eAnnotations xmi:id="_ylbuQilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuQylPEeiPVdzzAv5aug" key="uuid" value="_I_ssoQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuRClPEeiPVdzzAv5aug" name="Funcionario">
+    <eAnnotations xmi:id="_ylbuRSlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuRilPEeiPVdzzAv5aug" key="uuid" value="_02IoQQt1EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_ylbuRylPEeiPVdzzAv5aug" general="_ylbuhilPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuSClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuSSlPEeiPVdzzAv5aug" key="uuid" value="_gPmXMAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_ylbuSilPEeiPVdzzAv5aug" name="codigo">
+      <eAnnotations xmi:id="_ylbuSylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuTClPEeiPVdzzAv5aug" key="uuid" value="_g3qSMQt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuTSlPEeiPVdzzAv5aug" name="cargo">
+      <eAnnotations xmi:id="_ylbuTilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuTylPEeiPVdzzAv5aug" key="uuid" value="_2Vz10At2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuUClPEeiPVdzzAv5aug" name="salario">
+      <eAnnotations xmi:id="_ylbuUSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuUilPEeiPVdzzAv5aug" key="uuid" value="_3wlxwQt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuUylPEeiPVdzzAv5aug" name="EquipeDeReparo">
+    <eAnnotations xmi:id="_ylbuVClPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuVSlPEeiPVdzzAv5aug" key="uuid" value="_65aZUQt1EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbuVilPEeiPVdzzAv5aug" name="id">
+      <eAnnotations xmi:id="_ylbuVylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuWClPEeiPVdzzAv5aug" key="uuid" value="_B7QrcQt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuWSlPEeiPVdzzAv5aug" name="numeroDePessoas">
+      <eAnnotations xmi:id="_ylbuWilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuWylPEeiPVdzzAv5aug" key="uuid" value="_UMfnIAt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuXClPEeiPVdzzAv5aug" name="funcionarios" visibility="public" type="_ylbuuSlPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuXSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuXilPEeiPVdzzAv5aug" key="uuid" value="_i3mUMAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_ylbuXylPEeiPVdzzAv5aug" name="montaEquipe">
+      <eAnnotations xmi:id="_ylbuYClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuYSlPEeiPVdzzAv5aug" key="uuid" value="_362kMQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuYilPEeiPVdzzAv5aug" name="Class">
+    <eAnnotations xmi:id="_ylbuYylPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuZClPEeiPVdzzAv5aug" key="uuid" value="_bYQDMAt2EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuZSlPEeiPVdzzAv5aug" name="Equipamentos">
+    <eAnnotations xmi:id="_ylbuZilPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuZylPEeiPVdzzAv5aug" key="uuid" value="_cgQ0IQt2EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbuaClPEeiPVdzzAv5aug" name="codigo">
+      <eAnnotations xmi:id="_ylbuaSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuailPEeiPVdzzAv5aug" key="uuid" value="_AdbwoQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuaylPEeiPVdzzAv5aug" name="descricao">
+      <eAnnotations xmi:id="_ylbubClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbubSlPEeiPVdzzAv5aug" key="uuid" value="_CLEXIQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbubilPEeiPVdzzAv5aug" name="fabricante">
+      <eAnnotations xmi:id="_ylbubylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbucClPEeiPVdzzAv5aug" key="uuid" value="_DPbXIQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbucSlPEeiPVdzzAv5aug" name="tamanho">
+      <eAnnotations xmi:id="_ylbucilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbucylPEeiPVdzzAv5aug" key="uuid" value="_EuQsoQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbudClPEeiPVdzzAv5aug" name="peso">
+      <eAnnotations xmi:id="_ylbudSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbudilPEeiPVdzzAv5aug" key="uuid" value="_GjX0IQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_ylbudylPEeiPVdzzAv5aug" name="calculaCustoEquipamento">
+      <eAnnotations xmi:id="_ylbueClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbueSlPEeiPVdzzAv5aug" key="uuid" value="_SlL40Qt7EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbueilPEeiPVdzzAv5aug" name="Endereco">
+    <eAnnotations xmi:id="_ylbueylPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbufClPEeiPVdzzAv5aug" key="uuid" value="_p4TMQQt2EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbufSlPEeiPVdzzAv5aug" name="cidade">
+      <eAnnotations xmi:id="_ylbufilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbufylPEeiPVdzzAv5aug" key="uuid" value="_rzS5UAt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbugClPEeiPVdzzAv5aug" name="UF">
+      <eAnnotations xmi:id="_ylbugSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbugilPEeiPVdzzAv5aug" key="uuid" value="_s0cNQQt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbugylPEeiPVdzzAv5aug" name="bairro">
+      <eAnnotations xmi:id="_ylbuhClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuhSlPEeiPVdzzAv5aug" key="uuid" value="_uOP40Qt2EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuhilPEeiPVdzzAv5aug" name="Cidadao">
+    <eAnnotations xmi:id="_ylbuhylPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuiClPEeiPVdzzAv5aug" key="uuid" value="_Bp9qoQt3EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbuiSlPEeiPVdzzAv5aug" name="identificador">
+      <eAnnotations xmi:id="_ylbuiilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuiylPEeiPVdzzAv5aug" key="uuid" value="_E5Q4MAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbujClPEeiPVdzzAv5aug" name="nome">
+      <eAnnotations xmi:id="_ylbujSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbujilPEeiPVdzzAv5aug" key="uuid" value="_Gh8GMAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbujylPEeiPVdzzAv5aug" name="cpf">
+      <eAnnotations xmi:id="_ylbukClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbukSlPEeiPVdzzAv5aug" key="uuid" value="_HxNVsQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbukilPEeiPVdzzAv5aug" name="identidade">
+      <eAnnotations xmi:id="_ylbukylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbulClPEeiPVdzzAv5aug" key="uuid" value="_JGpeoQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbulSlPEeiPVdzzAv5aug" name="filiacao">
+      <eAnnotations xmi:id="_ylbulilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbulylPEeiPVdzzAv5aug" key="uuid" value="_L63SsAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbumClPEeiPVdzzAv5aug" name="sexo">
+      <eAnnotations xmi:id="_ylbumSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbumilPEeiPVdzzAv5aug" key="uuid" value="_NcNJoQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbumylPEeiPVdzzAv5aug" name="estadoCivil">
+      <eAnnotations xmi:id="_ylbunClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbunSlPEeiPVdzzAv5aug" key="uuid" value="_PDq2sQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbunilPEeiPVdzzAv5aug" name="naturalidade">
+      <eAnnotations xmi:id="_ylbunylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuoClPEeiPVdzzAv5aug" key="uuid" value="_QaijAAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuoSlPEeiPVdzzAv5aug" name="endereco" type="_ylbueilPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuoilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuoylPEeiPVdzzAv5aug" key="uuid" value="_RrlUIQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbupClPEeiPVdzzAv5aug" name="telefone">
+      <eAnnotations xmi:id="_ylbupSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbupilPEeiPVdzzAv5aug" key="uuid" value="_TfeToAt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbupylPEeiPVdzzAv5aug" name="email">
+      <eAnnotations xmi:id="_ylbuqClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuqSlPEeiPVdzzAv5aug" key="uuid" value="_Ua1IoQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuqilPEeiPVdzzAv5aug" name="escolaridade">
+      <eAnnotations xmi:id="_ylbuqylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylburClPEeiPVdzzAv5aug" key="uuid" value="_WbKBoQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylburSlPEeiPVdzzAv5aug" name="profissao">
+      <eAnnotations xmi:id="_ylburilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylburylPEeiPVdzzAv5aug" key="uuid" value="_ZD17IQt3EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbusClPEeiPVdzzAv5aug" name="funcionario">
+      <eAnnotations xmi:id="_ylbusSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbusilPEeiPVdzzAv5aug" key="uuid" value="_gpB8IAt9EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Boolean"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbusylPEeiPVdzzAv5aug" name="recebeuDano">
+      <eAnnotations xmi:id="_ylbutClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbutSlPEeiPVdzzAv5aug" key="uuid" value="_ikQSsAt9EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Boolean"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_ylbutilPEeiPVdzzAv5aug" name="DataType">
+    <eAnnotations xmi:id="_ylbutylPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuuClPEeiPVdzzAv5aug" key="uuid" value="_mCY1MAt3EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_ylbuuSlPEeiPVdzzAv5aug" name="codigoFuncionarioVector">
+    <eAnnotations xmi:id="_ylbuuilPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuuylPEeiPVdzzAv5aug" key="uuid" value="_n0-NIAt3EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbuvClPEeiPVdzzAv5aug" name="Reparo">
+    <eAnnotations xmi:id="_ylbuvSlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbuvilPEeiPVdzzAv5aug" key="uuid" value="_NOY6oQt4EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_ylbuvylPEeiPVdzzAv5aug" general="_ylbuLClPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuwClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuwSlPEeiPVdzzAv5aug" key="uuid" value="_zCUZ4At4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_ylbuwilPEeiPVdzzAv5aug" name="codigo">
+      <eAnnotations xmi:id="_ylbuwylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuxClPEeiPVdzzAv5aug" key="uuid" value="_OezZoQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuxSlPEeiPVdzzAv5aug" name="descricao">
+      <eAnnotations xmi:id="_ylbuxilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuxylPEeiPVdzzAv5aug" key="uuid" value="_QR2roQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuyClPEeiPVdzzAv5aug" name="status">
+      <eAnnotations xmi:id="_ylbuySlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuyilPEeiPVdzzAv5aug" key="uuid" value="_Rr4ZoQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuyylPEeiPVdzzAv5aug" name="materialUtilizado" type="_ylbvGSlPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbuzClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbuzSlPEeiPVdzzAv5aug" key="uuid" value="_Th6HIQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbuzilPEeiPVdzzAv5aug" name="custo">
+      <eAnnotations xmi:id="_ylbuzylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu0ClPEeiPVdzzAv5aug" key="uuid" value="_-oz74At4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_ylbu0SlPEeiPVdzzAv5aug" name="calculaCusto">
+      <eAnnotations xmi:id="_ylbu0ilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu0ylPEeiPVdzzAv5aug" key="uuid" value="_B31coAt5EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <ownedParameter xmi:id="_ylbu1ClPEeiPVdzzAv5aug" name="returnParameter" isUnique="false" direction="return">
+        <eAnnotations xmi:id="_ylbu1SlPEeiPVdzzAv5aug" source="genmymodel">
+          <details xmi:id="_ylbu1ilPEeiPVdzzAv5aug" key="uuid" value="_DI-7cAt5EDa8pY35g4JWVQ"/>
+        </eAnnotations>
+        <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbu1ylPEeiPVdzzAv5aug" name="Material">
+    <eAnnotations xmi:id="_ylbu2ClPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbu2SlPEeiPVdzzAv5aug" key="uuid" value="_bzeUsQt4EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbu2ilPEeiPVdzzAv5aug" name="código">
+      <eAnnotations xmi:id="_ylbu2ylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu3ClPEeiPVdzzAv5aug" key="uuid" value="_e4ioMQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu3SlPEeiPVdzzAv5aug" name="descricao">
+      <eAnnotations xmi:id="_ylbu3ilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu3ylPEeiPVdzzAv5aug" key="uuid" value="_gQSeQAt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu4ClPEeiPVdzzAv5aug" name="valor">
+      <eAnnotations xmi:id="_ylbu4SlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu4ilPEeiPVdzzAv5aug" key="uuid" value="_kXMCMQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu4ylPEeiPVdzzAv5aug" name="quantidade">
+      <eAnnotations xmi:id="_ylbu5ClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu5SlPEeiPVdzzAv5aug" key="uuid" value="_oWGHwQt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu5ilPEeiPVdzzAv5aug" name="tipo">
+      <eAnnotations xmi:id="_ylbu5ylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu6ClPEeiPVdzzAv5aug" key="uuid" value="_rdhywAt4EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_ylbu6SlPEeiPVdzzAv5aug" name="calculaCustoMaterial">
+      <eAnnotations xmi:id="_ylbu6ilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu6ylPEeiPVdzzAv5aug" key="uuid" value="_PrUvwQt7EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbu7ClPEeiPVdzzAv5aug" name="DanoRecebido">
+    <eAnnotations xmi:id="_ylbu7SlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbu7ilPEeiPVdzzAv5aug" key="uuid" value="_et96cQt5EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_ylbu7ylPEeiPVdzzAv5aug" general="_ylbuhilPEeiPVdzzAv5aug">
+      <eAnnotations xmi:id="_ylbu8ClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu8SlPEeiPVdzzAv5aug" key="uuid" value="_EF0sQQt7EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_ylbu8ilPEeiPVdzzAv5aug" name="tipoDeDano">
+      <eAnnotations xmi:id="_ylbu8ylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu9ClPEeiPVdzzAv5aug" key="uuid" value="_lxjR8Qt5EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu9SlPEeiPVdzzAv5aug" name="pagamento">
+      <eAnnotations xmi:id="_ylbu9ilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu9ylPEeiPVdzzAv5aug" key="uuid" value="_oVRL4Qt5EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_ylbu-ClPEeiPVdzzAv5aug" name="SRCB">
+    <eAnnotations xmi:id="_ylbu-SlPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbu-ilPEeiPVdzzAv5aug" key="uuid" value="_Bufd8Qt6EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_ylbu-ylPEeiPVdzzAv5aug" name="quantidadeDeOrdensDeServicoAtendidadas">
+      <eAnnotations xmi:id="_ylbu_ClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbu_SlPEeiPVdzzAv5aug" key="uuid" value="_Efu2gQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbu_ilPEeiPVdzzAv5aug" name="pagamentoTotalDeDanos">
+      <eAnnotations xmi:id="_ylbu_ylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvAClPEeiPVdzzAv5aug" key="uuid" value="_JPJzAQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ylbvASlPEeiPVdzzAv5aug" name="quantidadeDeEquipesDeReparos">
+      <eAnnotations xmi:id="_ylbvAilPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvAylPEeiPVdzzAv5aug" key="uuid" value="_Lb_eAQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Integer"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_ylbvBClPEeiPVdzzAv5aug" name="listaMaterialUtilizadoOrdem">
+      <eAnnotations xmi:id="_ylbvBSlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvBilPEeiPVdzzAv5aug" key="uuid" value="_ara1kAt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+    <ownedOperation xmi:id="_ylbvBylPEeiPVdzzAv5aug" name="listaEquipamentoUtilizadoOrdem">
+      <eAnnotations xmi:id="_ylbvCClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvCSlPEeiPVdzzAv5aug" key="uuid" value="_coFWkQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+    <ownedOperation xmi:id="_ylbvCilPEeiPVdzzAv5aug" name="mostraQuantidadeDeOrdensAtendidas">
+      <eAnnotations xmi:id="_ylbvCylPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvDClPEeiPVdzzAv5aug" key="uuid" value="_hQ8YEQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+      <ownedParameter xmi:id="_ylbvDSlPEeiPVdzzAv5aug" name="returnParameter" isUnique="false" direction="return">
+        <eAnnotations xmi:id="_ylbvDilPEeiPVdzzAv5aug" source="genmymodel">
+          <details xmi:id="_ylbvDylPEeiPVdzzAv5aug" key="uuid" value="_oJ4l0At6EDa8pY35g4JWVQ"/>
+        </eAnnotations>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:id="_ylbvEClPEeiPVdzzAv5aug" name="mostraPagamentoTotal">
+      <eAnnotations xmi:id="_ylbvESlPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvEilPEeiPVdzzAv5aug" key="uuid" value="_omPKoQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+    <ownedOperation xmi:id="_ylbvEylPEeiPVdzzAv5aug" name="mostraQuantidadeEquipes">
+      <eAnnotations xmi:id="_ylbvFClPEeiPVdzzAv5aug" source="genmymodel">
+        <details xmi:id="_ylbvFSlPEeiPVdzzAv5aug" key="uuid" value="_q8srsQt6EDa8pY35g4JWVQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_ylbvFilPEeiPVdzzAv5aug" name="VetorCodigosEquipamentos">
+    <eAnnotations xmi:id="_ylbvFylPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbvGClPEeiPVdzzAv5aug" key="uuid" value="_3yF0UQt7EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_ylbvGSlPEeiPVdzzAv5aug" name="VetorCodigosMateriais">
+    <eAnnotations xmi:id="_ylbvGilPEeiPVdzzAv5aug" source="genmymodel">
+      <details xmi:id="_ylbvGylPEeiPVdzzAv5aug" key="uuid" value="_CTy4gQt8EDa8pY35g4JWVQ"/>
+    </eAnnotations>
+  </packagedElement>
+</uml:Model>
