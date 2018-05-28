@@ -20,8 +20,8 @@ class Cidadao(object):
     #def inserirCadastro(self):
     #    pass
 
-    def removerCadastro(self):
-        pass
+    #def removerCadastro(self):
+    #    pass
 
     def modificarCadastro(self):
         pass
@@ -44,38 +44,38 @@ class Cidadao(object):
         self.endereco.mostrarEndereco()
 
 
-    def consultaArquivoDeDanos(self):
-        pass
-
-    def realizaConsultaGeral(self):
-        pass
-
-    def geraRelatorio(self):
-        pass
-
-    def inserirBuraco(self):
-        pass
-
-    def removerBuraco(self):
-        pass
-
-    def modificarBuraco(self):
-        pass
-
-    def mostrarBuraco(self):
-        pass
-
-    def inserirDanoRecebido(self):
-        pass
-
-    def removerDanoRecebido(self):
-        pass
-
-    def modificarDanoRecebido(self):
-        pass
-
-    def mostrarDanoRecebido(self):
-        pass
+    # def consultaArquivoDeDanos(self):
+    #     pass
+    #
+    # def realizaConsultaGeral(self):
+    #     pass
+    #
+    # def geraRelatorio(self):
+    #     pass
+    #
+    # def inserirBuraco(self):
+    #     pass
+    #
+    # def removerBuraco(self):
+    #     pass
+    #
+    # def modificarBuraco(self):
+    #     pass
+    #
+    # def mostrarBuraco(self):
+    #     pass
+    #
+    # def inserirDanoRecebido(self):
+    #     pass
+    #
+    # def removerDanoRecebido(self):
+    #     pass
+    #
+    # def modificarDanoRecebido(self):
+    #     pass
+    #
+    # def mostrarDanoRecebido(self):
+    #     pass
 
 
 class Endereco(object):
@@ -119,14 +119,14 @@ class Funcionario(Cidadao):
         self.cargo = cargo
         self.salario = salario
 
-    def inserirCadastroFuncionario(self):
-        pass
+    # def inserirCadastroFuncionario(self):
+    #     pass
 
     def modificarCadastroFuncionario(self):
         pass
 
-    def removerCadastroFuncionario(self):
-        pass
+    # def removerCadastroFuncionario(self):
+    #     pass
 
     def mostrarCadastroFuncionario(self):
         super(Funcionario,self).mostrarCadastro()
@@ -136,65 +136,65 @@ class Funcionario(Cidadao):
         Salario: {self.salario}
         ''')
 
-    def inserirMaterialDeReparo(self):
-        pass
-
-    def modificarMaterialDeReparo(self):
-        pass
-
-    def removerMaterialDeReparo(self):
-        pass
-
-    def mostrarMaterialDeReparo(self):
-        pass
-
-    def inserirEquipamento(self):
-        pass
-
-    def modificarEquipamento(self):
-        pass
-
-    def removerEquipamento(self):
-        pass
-
-    def mostrarEquipament(self):
-        pass
-
-    def inserirEquipe(self):
-        pass
-
-    def modificarEquipe(self):
-        pass
-
-    def removerEquipe(self):
-        pass
-
-    def mostrarEquipe(self):
-        pass
-
-    def inserirReparo(self):
-        pass
-
-    def removerReparo(self):
-        pass
-
-    def modificarReparo(self):
-        pass
-
-    def mostrarReparo(self):
-        pass
-
-    def inserirOrdemDeTrabalho(self):
-        pass
-
-    def removerOrdemDeTrabalho(self):
-        pass
-
-    def modificarOrdemDeTrabalho(self):
-        pass
-
-    def mostrarOrdemDeTrabalho(self):
-        pass
+    # def inserirMaterialDeReparo(self):
+    #     pass
+    #
+    # def modificarMaterialDeReparo(self):
+    #     pass
+    #
+    # def removerMaterialDeReparo(self):
+    #     pass
+    #
+    # def mostrarMaterialDeReparo(self):
+    #     pass
+    #
+    # def inserirEquipamento(self):
+    #     pass
+    #
+    # def modificarEquipamento(self):
+    #     pass
+    #
+    # def removerEquipamento(self):
+    #     pass
+    #
+    # def mostrarEquipament(self):
+    #     pass
+    #
+    # def inserirEquipe(self):
+    #     pass
+    #
+    # def modificarEquipe(self):
+    #     pass
+    #
+    # def removerEquipe(self):
+    #     pass
+    #
+    # def mostrarEquipe(self):
+    #     pass
+    #
+    # def inserirReparo(self):
+    #     pass
+    #
+    # def removerReparo(self):
+    #     pass
+    #
+    # def modificarReparo(self):
+    #     pass
+    #
+    # def mostrarReparo(self):
+    #     pass
+    #
+    # def inserirOrdemDeTrabalho(self):
+    #     pass
+    #
+    # def removerOrdemDeTrabalho(self):
+    #     pass
+    #
+    # def modificarOrdemDeTrabalho(self):
+    #     pass
+    #
+    # def mostrarOrdemDeTrabalho(self):
+    #     pass
 
 
 class Buraco(object):
@@ -354,21 +354,135 @@ class SRCB(object):
 
         print('Saindo...')
 
+    def login(self):
+        """ Realiza o login do usuario por meio do seu identificador, pegando as informacoes
+        no banco de dados e retornando o objeto de usuario """
+
+        if(self.debugCode == 1):
+            nome = "Admin"
+            cpf = "919.231.890-85"
+            identidade = "45.772.060-8"
+            filiacao = "UNB"
+            sexo = "ND"
+            estadoCivil = "Solteiro"
+            naturalidade = "Brasilia"
+            endereco = Endereco(cidade="Brasilia", uf= "DF", bairro="Asa Norte")
+            email = "admin@thissite.com"
+            profissao = "Website Admin"
+            funcionario = True
+            recebeuDano = False
+            codigo = "000"
+            cargo = "Administrator"
+            salario = "999"
+            identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
+
+            temp = Funcionario(identificador, nome, cpf, identidade, filiacao,
+                           sexo, estadoCivil, naturalidade, endereco, email,
+                           profissao, funcionario, recebeuDano, codigo, cargo, salario)
+
+            return temp
+
+        user = None
+
+        print("[*] Realize o login informando o identificador do seu usuario: ")
+        identificadorUsuario = input("> ")
+
+        #inserir o procedimento de busca no banco de dados
+
+        return user
 
     def interfaceUsuario(self):
-        print(''' Bem vindo ao painel de usuario
-        1) Teste
-        ''')
+        user = self.login()
+
+        print(''' [ Bem vindo ao painel de usuario ]
+         1) Consultar cadastro
+         2) Modificar cadastro
+         3) Realizar consulta geral
+         4) Consultar arquivos de dano
+         5) Menu Buraco
+         6) Menu Dano Recebido
+         7) Gerar relatorio 
+         8) Sair
+         ''')
+
+        selection = {
+            '1': 'mostrarCadastro',
+            '2': 'modificarCadastro',#
+            '3': 'realizarConsultaGeral',#
+            '4': 'consultaArquivosDeDano',#
+            '5': 'interfaceBuraco',#
+            '6': 'interfaceDanoRecebido',#
+            '7': 'gerarRelatorio',#
+        }
+
+        while (1):
+            option = input("> ")
+
+            if(option == '8'):
+                break
+            elif(option == '1' or option == '2'):
+                getattr(user, selection[option])()
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+
+
+        print('Saindo do painel de usuario...')
+
 
     def interfaceFuncionario(self):
-        print(''' Bem vindo ao painel de funcionario
-        1) Teste
-        ''')
+        user = self.login()
+
+        print(''' [ Bem vindo ao painel de funcionario ]
+         1) Consultar cadastro
+         2) Cadastrar novo funcionário
+         3) Modificar cadastro
+         4) Excluir cadastro
+         5) Menu Material de Reparo
+         6) Menu Ordem de Trabalho
+         7) Menu Equipamento
+         8) Menu Equipe de Reparo
+         9) Menu Reparo
+         10) Sair
+         ''')
+
+        selection = {
+            '1': 'consultaCadastroFuncionario',
+            '2': 'cadastroFuncionario',
+            '3': 'modificarCadastroFuncionario',
+            '4': 'excluirCadastroFuncionario',
+            '5': 'interfaceMaterialDeReparo',
+            '6': 'interfaceOrdemDeTrabalho',
+            '7': 'interfaceEquipamento',
+            '8': 'interfaceEquipeDeReparo',
+            '9': 'interfaceReparo',
+        }
+
+        while (1):
+            option = input("> ")
+
+            if(option == '10'):
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+
+
+        print('Saindo do painel de funcionario...')
+
 
     def interfaceCadastroUsuario(self):
-        print(''' Bem vindo ao painel de cadastro:
+        print(''' [ Bem vindo ao painel de cadastro ]:
         ''')
-        teste = self.inserirCadastro()
+
+        novoUsuario = self.inserirCadastro()
+        #inserir no banco de dados
 
     def inserirCadastro(self):
         nome = input('>> Insira o nome: ')
@@ -395,7 +509,6 @@ class SRCB(object):
 
         return novoUsuario
 
-
     def novoEndereco(self):
         cidade = input('>> Insira a cidade: ')
         uf = input('>> Insira a UF: ')
@@ -404,3 +517,45 @@ class SRCB(object):
         enderecoUsuario = Endereco(cidade,uf,bairro)
 
         return enderecoUsuario
+
+    def realizarConsultaGeral(self):
+        pass
+
+    def consultaArquivosDeDano(self):
+        pass
+
+    def interfaceBuraco(self):
+        pass
+
+    def interfaceDanoRecebido(self):
+        pass
+
+    def gerarRelatorio(self):
+        pass
+
+    def consultaCadastroFuncionario(self):
+        pass
+
+    def cadastroFuncionario(self):
+        pass
+
+    def modificarCadastroFuncionario(self):
+        pass
+
+    def excluirCadastroFuncionario(self):
+        pass
+
+    def interfaceMaterialDeReparo(self):
+        pass
+
+    def interfaceOrdemDeTrabalho(self):
+        pass
+
+    def interfaceEquipamento(self):
+        pass
+
+    def interfaceEquipeDeReparo(self):
+        pass
+
+    def interfaceReparo(self):
+        pass
