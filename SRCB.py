@@ -2,6 +2,9 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
+from Endereco import Endereco
+from Cidadao import Cidadao
+from Cidadao import Funcionario
 
 database = 'srcb.db'
 #myFile = Path(database)
@@ -98,7 +101,7 @@ class SRCB(object):
          ''')
 
         selection = {
-            '1': 'mostrarCadastro',
+            '1': 'mostrar_cadastro',
             '2': 'modificarCadastro',#
             '3': 'realizarConsultaGeral',#
             '4': 'consultaArquivosDeDano',#
@@ -189,12 +192,10 @@ class SRCB(object):
         funcionario = False
         recebeuDano = False
 
-        identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
-
-        novoUsuario = Cidadao(identificador, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email, profissao, funcionario, recebeuDano)
+        novoUsuario = Cidadao(nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email, profissao, funcionario, recebeuDano)
 
         if(self.debugCode == 1):
-            novoUsuario.mostrarCadastro()
+            novoUsuario.mostrar_cadastro()
 
         return novoUsuario
 

@@ -1,6 +1,6 @@
 import sqlite3
 import hashlib as hs
-import myClassFile
+import SRCB
 
 conn = sqlite3.connect('srcb.db')
 
@@ -49,12 +49,15 @@ c = conn.cursor()
 #                  situacao text, equipeDeReparo text, equipamentos text, horasAplicadas integer
 # )""")
 #
+
+# c.executescript('drop table if exists reparo;')
+#
 # c.execute("""CREATE TABLE reparo(
 # identificador TEXT, endereco TEXT, tamanho INTEGER, localizacao TEXT, prioridade INTEGER, registradoPor TEXT,
 #  codigo TEXT, descricao TEXT, situacao TEXT,
 #                  equipeDeReparo TEXT, equipamentos TEXT, horasAplicadas INTEGER, codigoReparo TEXT,
 #                   descricaoReparo TEXT, status TEXT, materialUtilizado TEXT,
-#                  custo TEXT
+#                  custo INTEGER
 # )""")
 #
 # c.execute("""CREATE TABLE equipeDeReparo (
@@ -69,39 +72,39 @@ c = conn.cursor()
 # codigo TEXT, descricao TEXT, valor INTEGER, quantidade INTEGER, tipo TEXT
 # )""")
 
-nome = "Admin"
-cpf = "919.231.890-85"
-identidade = "45.772.060-8"
-filiacao = "UNB"
-sexo = "ND"
-estadoCivil = "Solteiro"
-naturalidade = "Brasilia"
-endereco = ",".join(["Brasilia", "DF", "Asa Norte"]) #atencao a isso
-email = "admin@thissite.com"
-profissao = "Website Admin"
-funcionario = int(True) #atencao
-recebeuDano = int(False)
-codigo = "000"
-cargo = "Administrator"
-salario = "999"
-identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
-#identificador = "batata"
-
-#c.execute("INSERT INTO funcionario VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(identificador,nome,cpf,identidade,filiacao,sexo,estadoCivil,naturalidade,endereco,email,profissao,funcionario,recebeuDano,codigo,cargo,salario))
-idDano = ""
-tipoDeDano = ""
-pagamento = ""
-idBuraco = ""
-idCidadao = ""
-
-dano1 = myClassFile.Dano("3122141","quebrou tudo","100000","321421","421037218")
-
-#checar antes do insert se nao há registros duplicados, checar o id antes de executar o insert
-c.execute("INSERT INTO dano VALUES(:idDano, :tipoDeDano, :pagamento, :idBuraco, :idCidadao)",{'idDano':dano1.idDano, 'tipoDeDano':dano1.tipoDeDano, 'pagamento':dano1.pagamento, 'idBuraco':dano1.idBuraco, 'idCidadao':dano1.idCidadao})
-
-c.execute("SELECT * FROM dano")
-
-print(c.fetchall())
+# nome = "Admin"
+# cpf = "919.231.890-85"
+# identidade = "45.772.060-8"
+# filiacao = "UNB"
+# sexo = "ND"
+# estadoCivil = "Solteiro"
+# naturalidade = "Brasilia"
+# endereco = ",".join(["Brasilia", "DF", "Asa Norte"]) #atencao a isso
+# email = "admin@thissite.com"
+# profissao = "Website Admin"
+# funcionario = int(True) #atencao
+# recebeuDano = int(False)
+# codigo = "000"
+# cargo = "Administrator"
+# salario = "999"
+# identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
+# #identificador = "batata"
+#
+# #c.execute("INSERT INTO funcionario VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(identificador,nome,cpf,identidade,filiacao,sexo,estadoCivil,naturalidade,endereco,email,profissao,funcionario,recebeuDano,codigo,cargo,salario))
+# idDano = ""
+# tipoDeDano = ""
+# pagamento = ""
+# idBuraco = ""
+# idCidadao = ""
+#
+# dano1 = SRCB.Dano("3122141", "quebrou tudo", "100000", "321421", "421037218")
+#
+# #checar antes do insert se nao há registros duplicados, checar o id antes de executar o insert
+# c.execute("INSERT INTO dano VALUES(:idDano, :tipoDeDano, :pagamento, :idBuraco, :idCidadao)",{'idDano':dano1.idDano, 'tipoDeDano':dano1.tipoDeDano, 'pagamento':dano1.pagamento, 'idBuraco':dano1.idBuraco, 'idCidadao':dano1.idCidadao})
+#
+# c.execute("SELECT * FROM dano")
+#
+# print(c.fetchall())
 
 conn.commit()
 

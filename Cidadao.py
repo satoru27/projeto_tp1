@@ -2,6 +2,7 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
+DEBUG_FLAG = True
 
 database = 'srcb.db'
 #myFile = Path(database)
@@ -11,10 +12,11 @@ database = 'srcb.db'
 db_connection = sql.connect(database)
 db_cursor = db_connection.cursor()
 
+
 class Cidadao(object):
-    def __init__(self, identificador, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
-                 profissao, funcionario, recebeuDano):
-        self.identificador = identificador
+    def __init__(self, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
+                 profissao):
+        self.identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
         self.nome = nome
         self.cpf = cpf
         self.identidade = identidade
@@ -22,11 +24,11 @@ class Cidadao(object):
         self.sexo = sexo
         self.estadoCivil = estadoCivil
         self.naturalidade = naturalidade
-        self.endereco = endereco # redefinir endereco nao para uma classe e sim para a concatenacao dos campos separado por virgula
+        self.endereco = endereco
         self.email = email
         self.profissao = profissao
-        self.funcionario = funcionario
-        self.recebeuDano = recebeuDano
+        self.funcionario = False #deve ser mudado no cadastro do funcionario caso ocorra
+        self.recebeuDano = False #deve ser mudado se o cidadao recebeu dano
 
     #def inserirCadastro(self):
     #    pass
@@ -34,10 +36,10 @@ class Cidadao(object):
     #def removerCadastro(self):
     #    pass
 
-    def modificarCadastro(self):
+    def modificar_cadastro(self):
         pass
 
-    def mostrarCadastro(self):
+    def mostrar_cadastro(self):
         print(f'''<Informacoes do cidadao>
         Identificador: {self.identificador}
         Nome: {self.nome}
@@ -54,8 +56,17 @@ class Cidadao(object):
         ''')
         self.endereco.mostrarEndereco()
 
+    def gerar_funcionario(self,cargo, salario):
+        funcionario = Funcionario(self.nome, self.cpf, self.identidade, self.filiacao, self.sexo, self.estadoCivil,
+                                  self.naturalidade, self.endereco, self.email,self.profissao, self.funcionario,
+                                  self.recebeuDano, cargo, salario)
+        funcionario.funcionario = True
+        self.funcionario = True
+        #  atualizar cadastro no BD
+        return funcionario
 
-    def inserir_cadastro_db(self):
+
+    def inserir_cidadao_db(self):
         db_cursor.execute("SELECT * FROM cidadao WHERE identificador = :identificador ",
                           {'identificador': self.identificador})
 
@@ -67,23 +78,23 @@ class Cidadao(object):
                               {'identificador':self.identificador, 'nome': self.nome, 'cpf': self.cpf,
                                'identidade': self.identidade,'filiacao':self.filiacao,'sexo':self.sexo,
                                'estadoCivil': self.estadoCivil, 'naturalidade': self.naturalidade,
-                               'endereco': self.endereco.stringEndereco(), 'email': self.email,
+                               'endereco': self.endereco.string_endereco(), 'email': self.email,
                                'profissao': self.profissao,'funcionario': int(self.funcionario),
                                'recebeuDano': int(self.recebeuDano)})
 
             db_connection.commit()
 
-            #debug
-            #db_cursor.execute("SELECT * FROM cidadao WHERE identificador = :identificador ",
-            #                  {'identificador': self.identificador})
-            #print(db_cursor.fetchall())
+            if DEBUG_FLAG:
+                db_cursor.execute("SELECT * FROM cidadao WHERE identificador = :identificador ",
+                                 {'identificador': self.identificador})
+                print(db_cursor.fetchall())
 
             print('>> Novo usuario adicionado a base de dados!\n')
 
         else:
             print('>> Cidadao ja cadastrado!')
-            #debug
-            #print(lst)
+            if DEBUG_FLAG:
+                print(lst)
 
 
 
@@ -121,32 +132,32 @@ class Cidadao(object):
     #     pass
 
 class Funcionario(Cidadao):
-    def __init__(self, identificador, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
-                 profissao, funcionario, recebeuDano, codigo, cargo, salario):
-        super(Funcionario, self).__init__(identificador, nome, cpf, identidade, filiacao, sexo, estadoCivil,
-                                          naturalidade, endereco, email, profissao, funcionario, recebeuDano)
-        self.codigo = codigo
+    def __init__(self, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
+                 profissao, funcionario, recebeuDano, cargo, salario):
+        super(Funcionario, self).__init__(nome, cpf, identidade, filiacao, sexo, estadoCivil,
+                                          naturalidade, endereco, email, profissao)
+        self.codigo = hs.sha224((self.identificador + cargo).encode('utf-8')).hexdigest()
         self.cargo = cargo
         self.salario = salario
 
     # def inserirCadastroFuncionario(self):
     #     pass
 
-    def modificarCadastroFuncionario(self):
+    def modificar_cadastro_funcionario(self):
         pass
 
     # def removerCadastroFuncionario(self):
     #     pass
 
-    def mostrarCadastroFuncionario(self):
-        super(Funcionario,self).mostrarCadastro()
+    def mostrar_cadastro_funcionario(self):
+        super(Funcionario, self).mostrar_cadastro()
         print(f''' <Funcionario>
         Codigo: {self.codigo}
         Cargo: {self.cargo}
         Salario: {self.salario}
         ''')
 
-    def inserir_cadastro_funcionario_db(self):
+    def inserir_funcionario_db(self):
         db_cursor.execute("SELECT * FROM funcionario WHERE identificador = :identificador ",
                           {'identificador': self.identificador})
 
@@ -159,24 +170,24 @@ class Funcionario(Cidadao):
                               {'identificador':self.identificador, 'nome': self.nome, 'cpf': self.cpf,
                                'identidade': self.identidade,'filiacao':self.filiacao,'sexo':self.sexo,
                                'estadoCivil': self.estadoCivil, 'naturalidade': self.naturalidade,
-                               'endereco': self.endereco.stringEndereco(), 'email': self.email,
+                               'endereco': self.endereco.string_endereco(), 'email': self.email,
                                'profissao': self.profissao,'funcionario': int(self.funcionario),
                                'recebeuDano': int(self.recebeuDano),'codigo':self.codigo, 'cargo': self.cargo,
                                'salario': self.salario})
 
             db_connection.commit()
 
-            #debug
-            #db_cursor.execute("SELECT * FROM cidadao WHERE identificador = :identificador ",
-            #                  {'identificador': self.identificador})
-            #print(db_cursor.fetchall())
+            if DEBUG_FLAG:
+                db_cursor.execute("SELECT * FROM funcionario WHERE identificador = :identificador ",
+                                 {'identificador': self.identificador})
+                print(db_cursor.fetchall())
 
             print('>> Novo funcionario adicionado a base de dados!\n')
 
         else:
             print('>> Funcionario ja cadastrado!')
-            #debug
-            #print(lst)
+            if DEBUG_FLAG:
+                print(lst)
 
     # def inserirMaterialDeReparo(self):
     #     pass
