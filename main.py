@@ -1,4 +1,4 @@
-from myClassFile import *
+from SRCB import *
 import argparse
 import hashlib
 
