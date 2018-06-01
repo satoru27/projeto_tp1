@@ -24,7 +24,7 @@ class Material(object):
     def calcula_custo_material(self):
         pass
 
-    def mostra_material(self):
+    def mostrar_material(self):
         print(f'''<Informacoes do material>
           Codigo: {self.codigo}
           Descricao: {self.descricao}

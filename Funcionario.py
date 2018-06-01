@@ -15,14 +15,16 @@ database = 'srcb.db'
 db_connection = sql.connect(database)
 db_cursor = db_connection.cursor()
 
+
 class Funcionario(Cidadao):
     def __init__(self, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
-                 profissao, funcionario, recebeuDano, cargo, salario):
+                 profissao, cargo, salario):
         super(Funcionario, self).__init__(nome, cpf, identidade, filiacao, sexo, estadoCivil,
                                           naturalidade, endereco, email, profissao)
         self.codigo = hs.sha224((self.identificador + cargo).encode('utf-8')).hexdigest()
         self.cargo = cargo
         self.salario = salario
+        self.funcionario = True
 
     # def inserirCadastroFuncionario(self):
     #     pass

@@ -2,8 +2,6 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
-from Endereco import Endereco
-from Funcionario import Funcionario
 DEBUG_FLAG = True
 
 database = 'srcb.db'
@@ -29,14 +27,8 @@ class Cidadao(object):
         self.endereco = endereco
         self.email = email
         self.profissao = profissao
-        self.funcionario = False #deve ser mudado no cadastro do funcionario caso ocorra
-        self.recebeuDano = False #deve ser mudado se o cidadao recebeu dano
-
-    #def inserirCadastro(self):
-    #    pass
-
-    #def removerCadastro(self):
-    #    pass
+        self.funcionario = False  # deve ser mudado no cadastro do funcionario caso ocorra
+        self.recebeuDano = False  # deve ser mudado se o cidadao recebeu dano
 
     def modificar_cadastro(self):
         pass
@@ -56,17 +48,16 @@ class Cidadao(object):
         Funcionario: {self.funcionario}
         Recebeu dano: {self.recebeuDano}
         ''')
-        self.endereco.mostrarEndereco()
+        self.endereco.mostrar_endereco()
 
-    def gerar_funcionario(self,cargo, salario):
-        funcionario = Funcionario(self.nome, self.cpf, self.identidade, self.filiacao, self.sexo, self.estadoCivil,
-                                  self.naturalidade, self.endereco, self.email,self.profissao, self.funcionario,
-                                  self.recebeuDano, cargo, salario)
-        funcionario.funcionario = True
-        self.funcionario = True
-        #  atualizar cadastro no BD
-        return funcionario
-
+    # def gerar_funcionario(self,cargo, salario):
+    #     funcionario = Funcionario(self.nome, self.cpf, self.identidade, self.filiacao, self.sexo, self.estadoCivil,
+    #                               self.naturalidade, self.endereco, self.email,self.profissao, self.funcionario,
+    #                               self.recebeuDano, cargo, salario)
+    #     funcionario.funcionario = True
+    #     self.funcionario = True
+    #     self.atualizar_funcionario()
+    #     return funcionario
 
     def inserir_cidadao_db(self):
         db_cursor.execute("SELECT * FROM cidadao WHERE identificador = :identificador ",
@@ -97,7 +88,6 @@ class Cidadao(object):
             print('>> Cidadao ja cadastrado!')
             if DEBUG_FLAG:
                 print(lst)
-
 
     def remover_cidadao_db(self):
         with db_connection:

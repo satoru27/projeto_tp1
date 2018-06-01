@@ -1,37 +1,31 @@
-from SRCB import *
 import argparse
 import hashlib
 
-from Material import Material
-from Equipamento import Equipamento
-from EquipeDeReparo import EquipeDeReparo
-from Buraco import Buraco,OrdemDeTrabalho,Reparo
-from Endereco import Endereco
-from Dano import Dano
+from SRCB import SRCB
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--debug", help="ativa o modo de debug", action="store_true")
 args = parser.parse_args()
 
 def main():
-    # if args.debug:
-    #     print("Rodando SRCB em modo de debug")
-    #     sistema = SRCB(debugCode=1)
-    # else:
-    #     sistema = SRCB(debugCode=0)
-    #
-    # sistema.interfacePrincipal()
+    if args.debug:
+        print("Rodando SRCB em modo de debug")
+        sistema = SRCB(debugCode=1)
+    else:
+        sistema = SRCB(debugCode=0)
 
+    #sistema.interfacePrincipal()
 
+    teste = sistema.retorna_reparo_bd('5071002941ca7b9abdfe01dc7ea7a069612b1ebb58e0a9d082998101')
 
     ####### TESTE #######
-    descricao_material = 'eh bem caro'
-    valor = 10
-    quantidade = 10
-    tipo = 'wut'
-    test_material = Material(descricao_material,valor,quantidade,tipo)
-    #test_material.inserir_material_db()
-    test_material.atualizar_descricao('muuuuito caro')
+    # descricao_material = 'eh bem caro'
+    # valor = 10
+    # quantidade = 10
+    # tipo = 'wut'
+    # test_material = Material(descricao_material,valor,quantidade,tipo)
+    # #test_material.inserir_material_db()
+    # test_material.atualizar_descricao('muuuuito caro')
 
     #
     # descricao_equipamento = 'piche'

@@ -2,7 +2,6 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
-from OrdemDeTrabalho import OrdemDeTrabalho
 from Endereco import Endereco
 
 DEBUG_FLAG = True
@@ -28,17 +27,17 @@ class Buraco(object):
     def mostrar_buraco(self):
         print(f''' <Buraco>
         Identificador: {self.identificador}
-        Endereco: {self.endereco}
         Tamanho: {self.tamanho}
         Localizacao: {self.localizacao}
         Prioridade: {self.prioridade}
         Registrado por: {self.registradoPor}
         ''')
+        self.endereco.mostrar_endereco()
 
-    def gerar_ordem_de_trabalho(self, descricao, situacao, equipeDeReparo, equipamentos, horasAplicadas):
-        ordem = OrdemDeTrabalho(self.endereco, self.tamanho, self.localizacao, self.prioridade, self.registradoPor,
-                                descricao, situacao, equipeDeReparo, equipamentos, horasAplicadas)
-        return ordem
+    # def gerar_ordem_de_trabalho(self, descricao, situacao, equipeDeReparo, equipamentos, horasAplicadas):
+    #     ordem = OrdemDeTrabalho(self.endereco, self.tamanho, self.localizacao, self.prioridade, self.registradoPor,
+    #                             descricao, situacao, equipeDeReparo, equipamentos, horasAplicadas)
+    #     return ordem
 
     def inserir_buraco_db(self):
         db_cursor.execute("SELECT * FROM buraco WHERE identificador = :identificador ",

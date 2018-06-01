@@ -3,7 +3,7 @@ class Endereco(object):
     no banco de dados ele e armazenado como uma concatenacao
     de cidade,uf e bairro separados por virgula
     """
-    def __init__(self, cidade, uf, bairro):
+    def __init__(self, cidade: object, uf: object, bairro: object) -> object:
         self.cidade = cidade
         self.uf = uf
         self.bairro = bairro

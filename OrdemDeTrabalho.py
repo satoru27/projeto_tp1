@@ -1,5 +1,5 @@
 from Buraco import Buraco
-from Reparo import Reparo
+#from Reparo import Reparo
 
 import hashlib as hs
 import sqlite3 as sql
@@ -38,12 +38,13 @@ class OrdemDeTrabalho(Buraco):
         Equipamentos: {self.equipamentos}
         Horas aplicadas: {self.horasAplicadas}
         ''')
+        self.mostrar_buraco()
 
-    def gerar_reparo(self, descricaoReparo, status, materialUtilizado):
-        reparo = Reparo(self.endereco, self.tamanho, self.localizacao, self.prioridade, self.registradoPor,
-                        self.descricao, self.situacao,self.equipeDeReparo, self.equipamentos, self.horasAplicadas,
-                        descricaoReparo, status, materialUtilizado)
-        return reparo
+    # def gerar_reparo(self, descricaoReparo, status, materialUtilizado):
+    #     reparo = Reparo(self.endereco, self.tamanho, self.localizacao, self.prioridade, self.registradoPor,
+    #                     self.descricao, self.situacao,self.equipeDeReparo, self.equipamentos, self.horasAplicadas,
+    #                     descricaoReparo, status, materialUtilizado)
+    #     return reparo
 
     def inserir_ordem_de_trabalho_db(self):
         db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE identificador = :identificador ",

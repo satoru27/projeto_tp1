@@ -29,7 +29,7 @@ class Reparo(OrdemDeTrabalho):
         # material e usar como custo
         self.custo = 0  # custo deve ser definido por calcula custo
 
-    def mostra_reparo(self):
+    def mostrar_reparo(self):
         print(f'''<Reparo>
         Codigo: {self.codigoReparo}
         Descricao: {self.descricaoReparo}
@@ -37,6 +37,7 @@ class Reparo(OrdemDeTrabalho):
         Material: {self.materialUtilizado}
         Custo: {self.custo}
         ''')
+        self.mostrar_ordem_de_trabalho()
 
     def calcula_custo(self):
         pass
