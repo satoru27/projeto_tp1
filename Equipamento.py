@@ -56,3 +56,48 @@ class Equipamento(object):
             print('>> Equipamento ja cadastrado!')
             if DEBUG_FLAG:
                 print(lst)
+
+    def remover_equipamento_db(self):
+        with db_connection:
+            db_cursor.execute("DELETE FROM equipamento WHERE codigo = :codigo", {'codigo': self.codigo})
+
+#  atualiza
+#  descricao, fabricante, tamanho, peso
+
+    def atualizar_codigo(self):
+        novo_codigo = hs.sha224((self.descricao + self.fabricante).encode('utf-8')).hexdigest()
+        with db_connection:
+            db_cursor.execute("UPDATE equipamento SET codigo = :novo_codigo WHERE codigo = :codigo",
+                              {'novo_codigo': novo_codigo, 'codigo': self.codigo})
+
+        self.codigo = novo_codigo
+
+    def atualizar_descricao(self, novo_valor):
+        self.descricao = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE equipamento SET descricao = :descricao WHERE codigo = :codigo",
+                              {'descricao': self.descricao, 'codigo': self.codigo})
+
+        self.atualizar_codigo()
+
+    def atualizar_fabricante(self, novo_valor):
+        self.fabricante = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE equipamento SET fabricante = :fabricante WHERE codigo = :codigo",
+                              {'fabricante': self.fabricante, 'codigo': self.codigo})
+
+        self.atualizar_codigo()
+
+    def atualizar_tamanho(self, novo_valor):
+        self.tamanho = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE equipamento SET tamanho = :tamanho WHERE codigo = :codigo",
+                              {'tamanho': self.tamanho, 'codigo': self.codigo})
+
+
+    def atualizar_peso(self, novo_valor):
+        self.peso = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE equipamento SET peso = :peso WHERE codigo = :codigo",
+                              {'peso': self.peso, 'codigo': self.codigo})
+

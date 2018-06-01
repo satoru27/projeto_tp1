@@ -50,3 +50,32 @@ class EquipeDeReparo(object):
             print('>> Equipe de reparo ja cadastrada!')
             if DEBUG_FLAG:
                 print(lst)
+
+    def remover_equipe_de_reparo_db(self):
+        with db_connection:
+            db_cursor.execute("DELETE FROM equipeDeReparo WHERE identificador = :identificador",
+                              {'identificador': self.identificador})
+
+    def atualizar_identificador(self):
+        novo_identificador = hs.sha224(self.funcionarios.encode('utf-8')).hexdigest()
+        with db_connection:
+            db_cursor.execute("UPDATE equipeDeReparo SET identificador = :novo_identificador "
+                              "WHERE identificador = :identificador",
+                              {'novo_identificador': novo_identificador, 'identificador': self.identificador})
+
+        self.identificador = novo_identificador
+
+    def atualizar_numeroDePessoas(self, novo_valor):
+        self.numeroDePessoas = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE equipeDeReparo SET numeroDePessoas = :numeroDePessoas WHERE identificador = :identificador",
+                              {'numeroDePessoas': self.numeroDePessoas, 'identificador': self.identificador})
+
+    def atualizar_funcionarios(self, novo_valor):
+        self.funcionarios = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET funcionarios = :funcionarios WHERE identificador = :identificador",
+                              {'funcionarios': self.funcionarios, 'identificador': self.identificador})
+
+        self.atualizar_identificador()
+

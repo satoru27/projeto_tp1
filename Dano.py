@@ -54,3 +54,48 @@ class Dano(object):
             print('>> Dano ja cadastrado!')
             if DEBUG_FLAG:
                 print(lst)
+
+    def remover_dano_db(self):
+        with db_connection:
+            db_cursor.execute("DELETE FROM dano WHERE idDano = :idDano",
+                              {'idDano': self.idDano})
+
+    # atualizacoes
+    # tipoDeDano, pagamento, idBuraco, idCidadao
+    def atualizar_idDano(self):
+        novo_id = hs.sha224((self.tipoDeDano + self.idBuraco + self.idCidadao).encode('utf-8')).hexdigest()
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET idDano = :novo_id WHERE idDano = :idDano",
+                              {'novo_id': novo_id, 'idDano': self.idDano})
+
+        self.idDano = novo_id
+
+    def atualizar_tipoDeDano(self, novo_valor):
+        self.tipoDeDano = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET tipoDeDano = :tipoDeDano WHERE idDano = :idDano",
+                              {'tipoDeDano': self.tipoDeDano, 'idDano': self.idDano})
+
+        self.atualizar_idDano()
+
+    def atualizar_pagamento(self, novo_valor):
+        self.pagamento = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET pagamento = :pagamento WHERE idDano = :idDano",
+                              {'pagamento': self.pagamento, 'idDano': self.idDano})
+
+    def atualizar_idBuraco(self, novo_valor):
+        self.idBuraco = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET idBuraco = :idBuraco WHERE idDano = :idDano",
+                              {'idBuraco': self.idBuraco, 'idDano': self.idDano})
+
+        self.atualizar_idDano()
+
+    def atualizar_idCidadao(self, novo_valor):
+        self.idCidadao = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE dano SET idCidadao = :idCidadao WHERE idDano = :idDano",
+                              {'idCidadao': self.idCidadao, 'idDano': self.idDano})
+
+        self.atualizar_idDano()

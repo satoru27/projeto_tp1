@@ -2,6 +2,8 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
+from Endereco import Endereco
+from Funcionario import Funcionario
 DEBUG_FLAG = True
 
 database = 'srcb.db'
@@ -97,6 +99,96 @@ class Cidadao(object):
                 print(lst)
 
 
+    def remover_cidadao_db(self):
+        with db_connection:
+            db_cursor.execute("DELETE FROM cidadao WHERE identificador = :identificador",
+                              {'identificador': self.identificador})
+
+    def atualizar_identificador(self):
+        novo_identificador = hs.sha224((self.nome + self.cpf).encode('utf-8')).hexdigest()
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET identificador = :novo_identificador "
+                              "WHERE identificador = :identificador",
+                              {'novo_identificador': novo_identificador, 'identificador': self.identificador})
+
+        self.identificador = novo_identificador
+
+    def atualizar_nome(self, novo_valor):
+        self.nome = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET nome = :nome WHERE identificador = :identificador",
+                              {'nome': self.nome, 'identificador': self.identificador})
+
+        self.atualizar_identificador()
+
+    def atualizar_cpf(self, novo_valor):
+        self.cpf = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET cpf = :cpf WHERE identificador = :identificador",
+                              {'cpf': self.cpf, 'identificador': self.identificador})
+
+        self.atualizar_identificador()
+
+    def atualizar_identidade(self, novo_valor):
+        self.identidade = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET identidade = :identidade WHERE identificador = :identificador",
+                              {'identidade': self.identidade, 'identificador': self.identificador})
+
+    def atualizar_filiacao(self, novo_valor):
+        self.filiacao = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET filiacao = :filiacao WHERE identificador = :identificador",
+                              {'filiacao': self.filiacao, 'identificador': self.identificador})
+
+    def atualizar_sexo(self, novo_valor):
+        self.sexo = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET sexo = :sexo WHERE identificador = :identificador",
+                              {'sexo': self.sexo, 'identificador': self.identificador})
+
+    def atualizar_estadoCivil(self, novo_valor):
+        self.estadoCivil = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET estadoCivil = :estadoCivil WHERE identificador = :identificador",
+                              {'estadoCivil': self.estadoCivil, 'identificador': self.identificador})
+
+    def atualizar_naturalidade(self, novo_valor):
+        self.naturalidade = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET naturalidade = :naturalidade WHERE identificador = :identificador",
+                              {'naturalidade': self.naturalidade, 'identificador': self.identificador})
+
+    def atualizar_endereco(self, novo_valor):
+        self.endereco = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET endereco = :endereco WHERE identificador = :identificador",
+                              {'endereco': self.endereco, 'identificador': self.identificador})
+
+    def atualizar_email(self, novo_valor):
+        self.email = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET email = :email WHERE identificador = :identificador",
+                              {'email': self.email, 'identificador': self.identificador})
+
+    def atualizar_profissao(self, novo_valor):
+        self.profissao = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET profissao = :profissao WHERE identificador = :identificador",
+                              {'profissao': self.profissao, 'identificador': self.identificador})
+
+    def atualizar_funcionario(self, novo_valor):
+        self.funcionario = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET funcionario = :funcionario WHERE identificador = :identificador",
+                              {'funcionario': int(self.funcionario), 'identificador': self.identificador})
+
+    def atualizar_recebeuDano(self, novo_valor):
+        self.recebeuDano = novo_valor
+        with db_connection:
+            db_cursor.execute("UPDATE cidadao SET recebeuDano = :recebeuDano WHERE identificador = :identificador",
+                              {'recebeuDano': int(self.recebeuDano), 'identificador': self.identificador})
+
 
     # def consultaArquivoDeDanos(self):
     #     pass
@@ -129,123 +221,5 @@ class Cidadao(object):
     #     pass
     #
     # def mostrarDanoRecebido(self):
-    #     pass
-
-class Funcionario(Cidadao):
-    def __init__(self, nome, cpf, identidade, filiacao, sexo, estadoCivil, naturalidade, endereco, email,
-                 profissao, funcionario, recebeuDano, cargo, salario):
-        super(Funcionario, self).__init__(nome, cpf, identidade, filiacao, sexo, estadoCivil,
-                                          naturalidade, endereco, email, profissao)
-        self.codigo = hs.sha224((self.identificador + cargo).encode('utf-8')).hexdigest()
-        self.cargo = cargo
-        self.salario = salario
-
-    # def inserirCadastroFuncionario(self):
-    #     pass
-
-    def modificar_cadastro_funcionario(self):
-        pass
-
-    # def removerCadastroFuncionario(self):
-    #     pass
-
-    def mostrar_cadastro_funcionario(self):
-        super(Funcionario, self).mostrar_cadastro()
-        print(f''' <Funcionario>
-        Codigo: {self.codigo}
-        Cargo: {self.cargo}
-        Salario: {self.salario}
-        ''')
-
-    def inserir_funcionario_db(self):
-        db_cursor.execute("SELECT * FROM funcionario WHERE identificador = :identificador ",
-                          {'identificador': self.identificador})
-
-        lst = db_cursor.fetchall()
-
-        if not lst:  # se nao encontrarmos o registro o colocamos na database
-            db_cursor.execute("INSERT INTO funcionario VALUES(:identificador, :nome, :cpf, :identidade, :filiacao, :sexo,"
-                              ":estadoCivil, :naturalidade, :endereco, :email, :profissao, :funcionario, :recebeuDano,"
-                              " :codigo, :cargo, :salario)",
-                              {'identificador':self.identificador, 'nome': self.nome, 'cpf': self.cpf,
-                               'identidade': self.identidade,'filiacao':self.filiacao,'sexo':self.sexo,
-                               'estadoCivil': self.estadoCivil, 'naturalidade': self.naturalidade,
-                               'endereco': self.endereco.string_endereco(), 'email': self.email,
-                               'profissao': self.profissao,'funcionario': int(self.funcionario),
-                               'recebeuDano': int(self.recebeuDano),'codigo':self.codigo, 'cargo': self.cargo,
-                               'salario': self.salario})
-
-            db_connection.commit()
-
-            if DEBUG_FLAG:
-                db_cursor.execute("SELECT * FROM funcionario WHERE identificador = :identificador ",
-                                 {'identificador': self.identificador})
-                print(db_cursor.fetchall())
-
-            print('>> Novo funcionario adicionado a base de dados!\n')
-
-        else:
-            print('>> Funcionario ja cadastrado!')
-            if DEBUG_FLAG:
-                print(lst)
-
-    # def inserirMaterialDeReparo(self):
-    #     pass
-    #
-    # def modificarMaterialDeReparo(self):
-    #     pass
-    #
-    # def removerMaterialDeReparo(self):
-    #     pass
-    #
-    # def mostrarMaterialDeReparo(self):
-    #     pass
-    #
-    # def inserirEquipamento(self):
-    #     pass
-    #
-    # def modificarEquipamento(self):
-    #     pass
-    #
-    # def removerEquipamento(self):
-    #     pass
-    #
-    # def mostrarEquipament(self):
-    #     pass
-    #
-    # def inserirEquipe(self):
-    #     pass
-    #
-    # def modificarEquipe(self):
-    #     pass
-    #
-    # def removerEquipe(self):
-    #     pass
-    #
-    # def mostrarEquipe(self):
-    #     pass
-    #
-    # def inserirReparo(self):
-    #     pass
-    #
-    # def removerReparo(self):
-    #     pass
-    #
-    # def modificarReparo(self):
-    #     pass
-    #
-    # def mostrarReparo(self):
-    #     pass
-    #
-    # def inserirOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def removerOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def modificarOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def mostrarOrdemDeTrabalho(self):
     #     pass
 
