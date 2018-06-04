@@ -95,7 +95,14 @@ class Dano(object):
     def atualizar_idCidadao(self, novo_valor):
         self.idCidadao = novo_valor
         with db_connection:
+            db_cursor.execute("SELECT * FROM dano WHERE idDano = :idDano",
+                              {'idDano': self.idDano})
+
+            lst = db_cursor.fetchall()
+
+            print(lst)
+
             db_cursor.execute("UPDATE dano SET idCidadao = :idCidadao WHERE idDano = :idDano",
                               {'idCidadao': self.idCidadao, 'idDano': self.idDano})
-
         self.atualizar_idDano()
+

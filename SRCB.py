@@ -1,6 +1,13 @@
 import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
+import os
+#os.system('cls' if os.name == 'nt' else 'clear')
+if os.name == 'nt':
+    CLEAR = 'cls'
+else:
+    CLEAR = 'clear'
+from random import randint
 
 from Buraco import Buraco
 from Cidadao import Cidadao
@@ -29,21 +36,21 @@ class SRCB(object):
     def interface_principal(self):
 
         selection = {
-            '1': 'interface_usuario',
+            '1': 'interface_cidadao',
 
             '2': 'interface_funcionario',
 
             '3': 'interface_cadastro_usuario'
         }
 
-        print(''' Bem vindo ao sistema
-        1) Painel de usuario
-        2) Painel de funcionario
-        3) Cadastrar novo usuario
-        4) Sair
-        ''')
-
         while(1):
+            print(''' [ Bem vindo ao sistema ]
+            1) Painel de usuario
+            2) Painel de funcionario
+            3) Cadastrar novo usuario
+            4) Sair
+            ''')
+
             option = input("> ")
 
             if(option != '4'):
@@ -55,74 +62,68 @@ class SRCB(object):
                 break
 
         print('Saindo...')
+        db_connection.close()
 
     def login_cidadao(self):
         """ Realiza o login do usuario por meio do seu identificador, pegando as informacoes
         no banco de dados e retornando o objeto de usuario """
 
-        # if(self.debugCode == 1):
-        #     nome = "Admin"
-        #     cpf = "919.231.890-85"
-        #     identidade = "45.772.060-8"
-        #     filiacao = "UNB"
-        #     sexo = "ND"
-        #     estadoCivil = "Solteiro"
-        #     naturalidade = "Brasilia"
-        #     endereco = Endereco(cidade="Brasilia", uf= "DF", bairro="Asa Norte")
-        #     email = "admin@thissite.com"
-        #     profissao = "Website Admin"
-        #     funcionario = True
-        #     recebeuDano = False
-        #     codigo = "000"
-        #     cargo = "Administrator"
-        #     salario = "999"
-        #     identificador = hs.sha224((nome + cpf).encode('utf-8')).hexdigest()
-        # 
-        #     temp = Funcionario(identificador, nome, cpf, identidade, filiacao,
-        #                    sexo, estadoCivil, naturalidade, endereco, email,
-        #                    profissao, funcionario, recebeuDano, codigo, cargo, salario)
-        # 
-        #     return temp
+        user = None
+
+        print("[*] Realize o login informando o identificador do seu usuario: ")
+        identificador_usuario = input("> ")
+
+        user = self.retorna_cidadao_bd(identificador_usuario)
+
+        return user
+    
+    def login_funcionario(self):
+        """ Realiza o login do usuario por meio do seu identificador, pegando as informacoes
+        no banco de dados e retornando o objeto de usuario """
 
         user = None
 
         print("[*] Realize o login informando o identificador do seu usuario: ")
-        identificadorUsuario = input("> ")
+        identificador_usuario = input("> ")
 
-        #inserir o procedimento de busca no banco de dados
+        user = self.retorna_funcionario_bd(identificador_usuario)
 
         return user
 
-    def interface_usuario(self):
-        user = self.login()
-
-        print(''' [ Bem vindo ao painel de usuario ]
-         1) Consultar cadastro
-         2) Modificar cadastro
-         3) Realizar consulta geral
-         4) Consultar arquivos de dano
-         5) Menu Buraco
-         6) Menu Dano Recebido
-         7) Gerar relatorio 
-         8) Sair
-         ''')
+    def interface_cidadao(self):
+        user = self.login_cidadao()
+        
+        if user == None:
+            print('>> Falha no login!')
+            return
 
         selection = {
             '1': 'mostrar_cadastro',
-            '2': 'modificarCadastro',#
-            '3': 'realizarConsultaGeral',#
-            '4': 'consultaArquivosDeDano',#
-            '5': 'interfaceBuraco',#
-            '6': 'interfaceDanoRecebido',#
-            '7': 'gerarRelatorio',#
+            '2': 'modificar_cadastro_cidadao',#
+            '3': 'realizar_consulta_geral',#
+            '4': 'consultar_arquivos_de_dano',#
+            '5': 'interface_buraco',#
+            '6': 'interface_dano_recebido',#
+            '7': 'gerar_relatorio',#
         }
 
         while (1):
+            print(''' [ Bem vindo ao painel de usuario ]
+                     1) Consultar cadastro
+                     2) Modificar cadastro
+                     3) Realizar consulta geral
+                     4) Consultar arquivos de dano
+                     5) Menu Buraco
+                     6) Menu Dano Recebido
+                     7) Gerar relatorio 
+                     8) Sair
+                     ''')
+
             option = input("> ")
 
             if(option == '8'):
                 break
-            elif(option == '1' or option == '2'):
+            elif(option == '1'):
                 getattr(user, selection[option])()
             else:
                 try:
@@ -135,7 +136,7 @@ class SRCB(object):
         print('Saindo do painel de usuario...')
 
     def interface_funcionario(self):
-        user = self.login()
+        user = self.login_funcionario()
 
         print(''' [ Bem vindo ao painel de funcionario ]
          1) Consultar cadastro
@@ -151,15 +152,15 @@ class SRCB(object):
          ''')
 
         selection = {
-            '1': 'consultaCadastroFuncionario',
-            '2': 'cadastroFuncionario',
-            '3': 'modificarCadastroFuncionario',
-            '4': 'excluirCadastroFuncionario',
-            '5': 'interfaceMaterialDeReparo',
-            '6': 'interfaceOrdemDeTrabalho',
-            '7': 'interfaceEquipamento',
-            '8': 'interfaceEquipeDeReparo',
-            '9': 'interfaceReparo',
+            '1': 'consultar_cadastro_funcionario',
+            '2': 'cadastrar_funcionario',
+            '3': 'modificar_cadastro_funcionario',
+            '4': 'excluir_cadastro_funcionario',
+            '5': 'interface_material_de_reparo',
+            '6': 'interface_ordem_de_trabalho',
+            '7': 'interface_equipamento',
+            '8': 'interface_equipe_de_reparo',
+            '9': 'interface_reparo',
         }
 
         while (1):
@@ -178,14 +179,14 @@ class SRCB(object):
         print('Saindo do painel de funcionario...')
 
 
-    def interface_cadastro_usuario(self):
+    def interface_cadastro_cidadao(self):
         print(''' [ Bem vindo ao painel de cadastro ]:
         ''')
 
-        novoUsuario = self.inserir_cadastro()
+        novoUsuario = self.inserir_cadastro_cidadao()
 
 
-    def inserir_cadastro(self):
+    def inserir_cadastro_cidadao(self):
         nome = input('>> Insira o nome: ')
         cpf = input('>> Insira o cpf: ')
         identidade = input('>> Insira a identidade: ')
@@ -242,6 +243,8 @@ class SRCB(object):
         #print(lst)
 
         cidadao = Cidadao(lst[1], lst[2], lst[3], lst[4], lst[5], lst[6], lst[7], self.retorna_obj_endereco(lst[8]), lst[9], lst[10])
+        cidadao.funcionario = bool(lst[11])
+        cidadao.recebeuDano = bool(lst[12])
 
         #cidadao.mostrar_cadastro()
 
@@ -266,6 +269,8 @@ class SRCB(object):
                                   self.retorna_obj_endereco(lst[8]),lst[9], lst[10],lst[14],lst[15])
 
         # funcionario.mostrar_cadastro_funcionario()
+        funcionario.funcionario = bool(lst[11])
+        funcionario.recebeuDano = bool(lst[12])
 
         return funcionario
 
@@ -281,11 +286,11 @@ class SRCB(object):
             return dano
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
 
         dano = Dano(lst[1], lst[2], lst[3], lst[4])
 
-        dano.mostrar_dano()
+        #dano.mostrar_dano()
 
         return dano
 
@@ -418,44 +423,249 @@ class SRCB(object):
     # def retorna__bd(self, identificador):
     #     pass
 
-    def realizarConsultaGeral(self):
-        pass
+    def realizar_consulta_geral(self,user):
+        print('\t[NAO IMPLEMENTADO]')
 
-    def consultaArquivosDeDano(self):
-        pass
+    def consultar_arquivos_de_dano(self,user):
+        obj = None
 
-    def interfaceBuraco(self):
-        pass
+        db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
+                          {'idCidadao': user.identificador})
+        lst = db_cursor.fetchall()
 
-    def interfaceDanoRecebido(self):
-        pass
+        if not lst:
+            print('>> Nao existem danos registrados para esse usuario')
+            return
 
-    def gerarRelatorio(self):
-        pass
+        for item in lst:
+            obj = self.retorna_dano_bd(item[0])
+            obj.mostrar_dano()
 
-    def consultaCadastroFuncionario(self):
-        pass
+    def interface_buraco(self,user):
 
-    def cadastroFuncionario(self):
-        pass
+        selection = {
+            '1': 'consultar_buracos',
+            '2': 'registrar_buraco',  #
+            '3': 'modificar_buraco',  #
+            '4': 'excluir_buraco',  #
+        }
 
-    def modificarCadastroFuncionario(self):
-        pass
+        while (1):
+            print(''' [ Bem vindo ao painel de buracos ]
+                             1) Consultar buracos registrados pelo seu usuario
+                             2) Registrar buraco
+                             3) Modificar buraco
+                             4) Excluir buraco
+                             5) Sair
+                             ''')
 
-    def excluirCadastroFuncionario(self):
-        pass
+            option = input("> ")
 
-    def interfaceMaterialDeReparo(self):
-        pass
+            if (option == '5'):
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
 
-    def interfaceOrdemDeTrabalho(self):
-        pass
+        print('Saindo do painel de buracos...')
 
-    def interfaceEquipamento(self):
-        pass
+    def consultar_buracos(self,user):
 
-    def interfaceEquipeDeReparo(self):
-        pass
+        db_cursor.execute("SELECT * FROM buraco WHERE registadoPor = :registadoPor ",
+                          {'registadoPor': user.identificador})
+        lst = db_cursor.fetchall()
 
-    def interfaceReparo(self):
-        pass
+        if not lst:
+            print(">> Nenhum buraco nao encontrado")
+            return
+
+        for entry in lst:
+            buraco = self.retorna_buraco_bd(entry[0])
+            buraco.mostrar_buraco()
+
+    def registrar_buraco(self,user):#endereco, tamanho, localizacao, prioridade, registradoPor
+        endereco = self.novo_endereco()
+        tamanho = int(input('>> Insira o tamanho: '))
+        localizacao = input('>> Insira a localizacao :')
+        prioridade = randint(0,9)
+        print(f'>> Prioridade: {prioridade}')
+        registradoPor = user.identificador
+
+        buraco = Buraco(endereco, tamanho, localizacao, prioridade, registradoPor)
+
+        buraco.inserir_buraco_db()
+
+    def modificar_buraco(self,user):
+        idBuraco = input('>> Insira o identificador do buraco:\n> ')
+        buraco = self.retorna_buraco_bd(idBuraco)
+        if buraco is None:
+            print('>> Buraco nao encontrado')
+            return
+
+        selection = {
+            '1': 'atualizar_endereco',
+            '2': 'atualizar_tamanho',
+            '3': 'atualizar_localizacao',
+            '4': 'atualizar_prioridade',
+            '5': 'atualizar_registradoPor',
+        }
+
+        identificador_old = buraco.identificador
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de buraco ]\n [ Selecione o atributo a ser atualizado: ]
+                                     1) Endereco
+                                     2) Tamanho
+                                     3) Localizacao
+                                     4) Prioridade
+                                     5) Por quem foi registrado
+                                     6) Sair
+                                     ''')
+
+            option = input("> ")
+
+            if option == '6':
+                break
+            elif option == '1':
+                novo_endereco = self.novo_endereco()
+                getattr(buraco, selection[option])(novo_endereco)
+
+            elif option == '2' or option == '4':
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = int(input('> '))
+                try:
+                    getattr(buraco, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = int(input('> '))
+                try:
+                    getattr(buraco, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        self.buraco_modificado_atualiza_ordem_e_reparo(buraco, identificador_old)
+
+        print('Saindo do painel de atualizacao de buraco...')
+
+    def excluir_buraco(self,user):
+        confirm = input('>> Deseja realmente excluir o buraco ? [S/s]')
+        if confirm == 'S' or confirm == 's':
+            idBuraco = input('>> Insira o identificador do buraco:\n> ')
+            buraco = self.retorna_buraco_bd(idBuraco)
+            buraco.remover_buraco_db()
+
+        print('Voltando...')
+        return
+
+    def modificar_cadastro_cidadao(self, user):
+
+        selection = {
+            '1': 'atualizar_nome',
+            '2': 'atualizar_cpf',
+            '3': 'atualizar_identidade',
+            '4': 'atualizar_filiacao',
+            '5': 'atualizar_sexo',
+            '6': 'atualizar_estadoCivil',
+            '7': 'atualizar_naturalidade',
+            '8': 'atualizar_endereco',
+            '9': 'atualizar_email',
+            '10': 'atualizar_profissao'
+        }
+
+        identificador_old = user.identificador
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de usuario ]\n [ Selecione o atributo a ser atualizado: ]
+                             1) Nome
+                             2) CPF
+                             3) Identidade
+                             4) Filiacao
+                             5) Sexo
+                             6) Estado Civil
+                             7) Naturalidade
+                             8) Endereco
+                             9) Email
+                             10) Profissao
+                             11) Sair
+                             ''')
+
+            option = input("> ")
+
+            if (option == '11'):
+                break
+            elif option == '8':
+                novo_endereco = self.novo_endereco()
+                getattr(user, selection[option])(novo_endereco)
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = input('> ')
+                try:
+                    getattr(user, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        if user.funcionario:
+            funcionario = self.retorna_funcionario_bd(identificador_old)
+            #funcionario.mostrar_cadastro_funcionario()
+            funcionario.cidadao_atualizado(user)
+            #funcionario.mostrar_cadastro_funcionario()
+            print('>> Cadastro de funcionario atualizado!')
+
+        if identificador_old != user.identificador:
+            self.cidadao_modificado_atualiza_dano(user, identificador_old)  # tem que atualizar o identificador
+            self.cidadao_modificado_atualiza_buraco(user, identificador_old)  # ja deve conter a atualizacao de ordem de trabalho e reparo
+
+        print('Saindo do painel de atualizacao de usuario...')
+
+    def cidadao_modificado_atualiza_dano(self,user,identificador_old):
+        db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :id_usuario ",
+                          {'id_usuario': identificador_old})
+
+        lst = db_cursor.fetchall()
+
+        print(lst)
+
+        for entry in lst:
+            dano = self.retorna_dano_bd(entry[0])
+            dano.mostrar_dano()
+            dano.atualizar_idCidadao(user.identificador)
+            dano.mostrar_dano()
+
+    def cidadao_modificado_atualiza_buraco(self,user,identificador_old):
+        db_cursor.execute("SELECT * FROM buraco WHERE registradoPor = :id_usuario ",
+                         {'id_usuario': identificador_old})
+
+        lst = db_cursor.fetchall()
+
+        for entry in lst:
+            buraco = self.retorna_buraco_bd(entry[0])
+            buraco.atualizar_registradoPor(user.identificador)
+            ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+            if ordem is not None:
+                ordem.buraco_atualizado(buraco)
+                reparo = self.retorna_reparo_bd(entry[0])
+                if reparo is not None:
+                    reparo.ordem_atualizada(ordem)
+
+    def buraco_modificado_atualiza_ordem_e_reparo(self,buraco,identificador_old):
+        db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE identificador = :identificador ",
+                          {'identificador': identificador_old})
+
+        lst = db_cursor.fetchall()
+
+        for entry in lst:
+            ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+            if ordem is not None:
+                ordem.buraco_atualizado(buraco)
+                reparo = self.retorna_reparo_bd(entry[0])
+                if reparo is not None:
+                    reparo.ordem_atualizada(ordem)

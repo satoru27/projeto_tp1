@@ -82,7 +82,9 @@ class Reparo(OrdemDeTrabalho):
             db_cursor.execute("DELETE FROM reparo WHERE identificador = :identificador",
                               {'identificador': self.identificador})
 
-    def ordem_atualizada(self,atualizacao):
+    def ordem_atualizada(self,atualizacao):# carregar atualizacao a partir da ordem
+        self.remover_buraco_db()
+
         self.identificador = atualizacao.identificador
         self.endereco = atualizacao.endereco
         self.tamanho = atualizacao.tamanho
@@ -99,21 +101,7 @@ class Reparo(OrdemDeTrabalho):
 
         self.codigoReparo = hs.sha224((self.codigo + self.descricaoReparo).encode('utf-8')).hexdigest()
 
-        with db_connection:
-            db_cursor.execute("UPDATE reparo SET identificador = :identificador, endereco = :endereco,"
-                              "tamanho = :tamanho, localizacao =:localizacao,"
-                              "prioridade = :prioridade, registradoPor = :registradoPor, codigo = :codigo,"
-                              "descricao = :descricao, situacao = :situacao, equipeDeReparo = :equipeDeReparo,"
-                              "equipamentos = :equipamentos, horasAplicadas = :horasAplicadas,"
-                              "codigoReparo = :codigoReparo WHERE identificador = :identificador",
-                              {'identificador': self.identificador, 'endereco': self.endereco.string_endereco(),
-                               'tamanho': self.tamanho, 'localizacao': self.localizacao, 'prioridade': self.prioridade,
-                               'registradoPor': self.registradoPor, 'codigo': self.codigo,'descricao': self.descricao,
-                               'situacao': self.situacao, 'equipeDeReparo': self.equipeDeReparo,
-                               'equipamentos': ','.join(self.equipamentos), 'horasAplicadas': self.horasAplicadas,
-                               'codigoReparo': self.codigoReparo})
-
-    #descricaoReparo, status, materialUtilizado
+        self.inserir_reparo_db()
 
     def atualizar_codigoReparo(self):
         novo_codigo = hs.sha224((self.codigo + self.descricaoReparo).encode('utf-8')).hexdigest()

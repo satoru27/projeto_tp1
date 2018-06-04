@@ -153,7 +153,7 @@ class Cidadao(object):
         self.endereco = novo_valor
         with db_connection:
             db_cursor.execute("UPDATE cidadao SET endereco = :endereco WHERE identificador = :identificador",
-                              {'endereco': self.endereco, 'identificador': self.identificador})
+                              {'endereco': self.endereco.string_endereco(), 'identificador': self.identificador})
 
     def atualizar_email(self, novo_valor):
         self.email = novo_valor

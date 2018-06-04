@@ -81,7 +81,9 @@ class OrdemDeTrabalho(Buraco):
                               {'identificador': self.identificador})
 
     #caso haja mudanca no buraco pai, atualizar a ordem referente a ele
-    def buraco_atualizado(self,atualizacao):
+    def buraco_atualizado(self, atualizacao):
+        self.remover_ordem_de_trabalho_db()
+
         self.identificador = atualizacao.identificador
         self.endereco = atualizacao.endereco
         self.tamanho = atualizacao.tamanho
@@ -91,16 +93,8 @@ class OrdemDeTrabalho(Buraco):
 
         self.codigo = hs.sha224((self.identificador + self.descricao).encode('utf-8')).hexdigest()
 
-        with db_connection:
-            db_cursor.execute("UPDATE ordemDeTrabalho SET identificador = :identificador, endereco = :endereco,"
-                              "tamanho = :tamanho, localizacao =:localizacao,"
-                              "prioridade = :prioridade, registradoPor = :registradoPor, codigo = :codigo,"
-                              "descricao = :descricao, situacao = :situacao, equipeDeReparo = :equipeDeReparo,"
-                              "equipamentos = :equipamentos, horasAplicadas = :horasAplicadas"
-                              " WHERE identificador = :identificador",
-                              {'identificador': self.identificador, 'endereco': self.endereco.string_endereco(),
-                               'tamanho': self.tamanho, 'localizacao': self.localizacao, 'prioridade': self.prioridade,
-                               'registradoPor': self.registradoPor, 'codigo': self.codigo})
+        self.inserir_ordem_de_trabalho_db()
+
 
     def atualizar_codigo(self):
         novo_codigo = hs.sha224((self.identificador + self.descricao).encode('utf-8')).hexdigest()

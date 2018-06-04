@@ -29,9 +29,6 @@ class Funcionario(Cidadao):
     # def inserirCadastroFuncionario(self):
     #     pass
 
-    def modificar_cadastro_funcionario(self):
-        pass
-
     # def removerCadastroFuncionario(self):
     #     pass
 
@@ -66,16 +63,58 @@ class Funcionario(Cidadao):
             if DEBUG_FLAG:
                 db_cursor.execute("SELECT * FROM funcionario WHERE identificador = :identificador ",
                                  {'identificador': self.identificador})
-                print(db_cursor.fetchall())
+                #print(db_cursor.fetchall())
 
-            print('>> Novo funcionario adicionado a base de dados!\n')
+            #print('>> Novo funcionario adicionado a base de dados!\n')
 
         else:
             print('>> Funcionario ja cadastrado!')
             if DEBUG_FLAG:
                 print(lst)
 
+        db_connection.close()
+
+    def remover_funcionario_db(self):
+        with db_connection:
+            db_cursor.execute("DELETE FROM funcionario WHERE identificador = :identificador",
+                              {'identificador': self.identificador})
+
+    # def cidadao_atualizado(self,atualizacao):
+    #     identificador_antigo = self.identificador
+    #     self.identificador = atualizacao.identificador
+    #     self.nome = atualizacao.nome
+    #     self.cpf = atualizacao.cpf
+    #     self.identidade = atualizacao.identidade
+    #     self.filiacao = atualizacao.filiacao
+    #     self.sexo = atualizacao.sexo
+    #     self.estadoCivil = atualizacao.estadoCivil
+    #     self.naturalidade = atualizacao.naturalidade
+    #     self.endereco = atualizacao.endereco
+    #     self.email = atualizacao.email
+    #     self.profissao = atualizacao.profissao
+    #     self.funcionario = True
+    #     self.recebeuDano = atualizacao.recebeuDano
+    #
+    #     self.codigo = hs.sha224((self.identificador + self.cargo).encode('utf-8')).hexdigest()
+    #     with db_connection:
+    #         db_cursor.execute("UPDATE funcionario SET "
+    #                           "identificador = :identificador, nome = :nome, cpf = :cpf, identidade = :identidade,"
+    #                           "filiacao =  :filiacao, sexo = :sexo,"
+    #                           "estadoCivil = :estadoCivil, naturalidade = :naturalidade, endereco = :endereco,"
+    #                           " email = :email, profissao = :profissao, funcionario =  :funcionario,"
+    #                           "recebeuDano =  :recebeuDano,"
+    #                           "codigo = :codigo WHERE identificador = :identificador_antigo",
+    #                           {'identificador': self.identificador, 'nome': self.nome, 'cpf': self.cpf,
+    #                            'identidade': self.identidade, 'filiacao': self.filiacao, 'sexo': self.sexo,
+    #                            'estadoCivil': self.estadoCivil, 'naturalidade': self.naturalidade,
+    #                            'endereco': self.endereco.string_endereco(), 'email': self.email,
+    #                            'profissao': self.profissao, 'funcionario': int(self.funcionario),
+    #                            'recebeuDano': int(self.recebeuDano), 'codigo': self.codigo,
+    #                            'identificador_antigo': identificador_antigo})
+
     def cidadao_atualizado(self,atualizacao):
+        self.remover_funcionario_db()
+
         self.identificador = atualizacao.identificador
         self.nome = atualizacao.nome
         self.cpf = atualizacao.cpf
@@ -91,20 +130,9 @@ class Funcionario(Cidadao):
         self.recebeuDano = atualizacao.recebeuDano
 
         self.codigo = hs.sha224((self.identificador + self.cargo).encode('utf-8')).hexdigest()
-        with db_connection:
-            db_cursor.execute("UPDATE funcionario SET "
-                              "identificador = :identificador, nome = :nome, cpf = :cpf, identidade = :identidade,"
-                              "filiacao =  :filiacao, sexo = :sexo,"
-                              "estadoCivil = :estadoCivil, naturalidade = :naturalidade, endereco = :endereco,"
-                              " email = :email, profissao = :profissao, funcionario =  :funcionario,"
-                              "recebeuDano =  :recebeuDano,"
-                              "codigo = :codigo WHERE identificador = :identificador",
-                              {'identificador': self.identificador, 'nome': self.nome, 'cpf': self.cpf,
-                               'identidade': self.identidade, 'filiacao': self.filiacao, 'sexo': self.sexo,
-                               'estadoCivil': self.estadoCivil, 'naturalidade': self.naturalidade,
-                               'endereco': self.endereco.string_endereco(), 'email': self.email,
-                               'profissao': self.profissao, 'funcionario': int(self.funcionario),
-                               'recebeuDano': int(self.recebeuDano), 'codigo': self.codigo})
+
+        self.inserir_funcionario_db()
+
 
     def atualizar_codigo(self):
         novo_identificador = hs.sha224((self.identificador + self.cargo).encode('utf-8')).hexdigest()
