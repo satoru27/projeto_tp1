@@ -131,31 +131,16 @@ class SRCB(object):
                 except KeyError:
                     print('Opcao invalida')
 
-
-
         print('Saindo do painel de usuario...')
 
     def interface_funcionario(self):
         user = self.login_funcionario()
 
-        print(''' [ Bem vindo ao painel de funcionario ]
-         1) Consultar cadastro
-         2) Cadastrar novo funcionário
-         3) Modificar cadastro
-         4) Excluir cadastro
-         5) Menu Material de Reparo
-         6) Menu Ordem de Trabalho
-         7) Menu Equipamento
-         8) Menu Equipe de Reparo
-         9) Menu Reparo
-         10) Sair
-         ''')
-
         selection = {
             '1': 'consultar_cadastro_funcionario',
-            '2': 'cadastrar_funcionario',
-            '3': 'modificar_cadastro_funcionario',
-            '4': 'excluir_cadastro_funcionario',
+            '2': 'modificar_cadastro_funcionario',
+            '3': 'excluir_cadastro_funcionario',
+            '4': 'cadastrar_funcionario',
             '5': 'interface_material_de_reparo',
             '6': 'interface_ordem_de_trabalho',
             '7': 'interface_equipamento',
@@ -163,7 +148,20 @@ class SRCB(object):
             '9': 'interface_reparo',
         }
 
-        while (1):
+        while 1:
+            print(''' [ Bem vindo ao painel de funcionario ]
+                     1) Consultar cadastro
+                     2) Modificar cadastro
+                     3) Excluir cadastro
+                     4) Cadastrar novo funcionário
+                     5) Menu Material de Reparo
+                     6) Menu Ordem de Trabalho
+                     7) Menu Equipamento
+                     8) Menu Equipe de Reparo
+                     9) Menu Reparo
+                     10) Sair
+                     ''')
+
             option = input("> ")
 
             if(option == '10'):
@@ -173,8 +171,6 @@ class SRCB(object):
                     getattr(self, selection[option])(user)
                 except KeyError:
                     print('Opcao invalida')
-
-
 
         print('Saindo do painel de funcionario...')
 
@@ -366,11 +362,11 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor
         obj = Buraco(self.retorna_obj_endereco(lst[1]),int(lst[2]),lst[3],int(lst[4]),lst[5])
 
-        obj.mostrar_buraco()
+        #obj.mostrar_buraco()
 
         return obj
 
@@ -386,13 +382,13 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
         #     descricao,situacao, equipeDeReparo, equipamentos, horasAplicadas
         obj = OrdemDeTrabalho(self.retorna_obj_endereco(lst[1]), int(lst[2]), lst[3], int(lst[4]), lst[5],
                               lst[7],lst[8],lst[9],lst[10],int(lst[11]))
 
-        obj.mostrar_ordem_de_trabalho()
+        #obj.mostrar_ordem_de_trabalho()
 
         return obj
 
@@ -408,7 +404,7 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
         #     descricao,situacao, equipeDeReparo, equipamentos, horasAplicadas
         # descricaoReparo, status, materialUtilizado
@@ -416,30 +412,27 @@ class SRCB(object):
                               lst[7], lst[8], lst[9], lst[10], int(lst[11]),
                               lst[13],lst[14],lst[15])
 
-        obj.mostrar_reparo()
+        #obj.mostrar_reparo()
 
         return obj
     #
     # def retorna__bd(self, identificador):
     #     pass
 
-    def realizar_consulta_geral(self,user):
-        print('\t[NAO IMPLEMENTADO]')
-
-    def consultar_arquivos_de_dano(self,user):
-        obj = None
-
-        db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
-                          {'idCidadao': user.identificador})
-        lst = db_cursor.fetchall()
-
-        if not lst:
-            print('>> Nao existem danos registrados para esse usuario')
-            return
-
-        for item in lst:
-            obj = self.retorna_dano_bd(item[0])
-            obj.mostrar_dano()
+    # def consultar_arquivos_de_dano(self,user):
+    #     obj = None
+    #
+    #     db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
+    #                       {'idCidadao': user.identificador})
+    #     lst = db_cursor.fetchall()
+    #
+    #     if not lst:
+    #         print('>> Nao existem danos registrados para esse usuario')
+    #         return
+    #
+    #     for item in lst:
+    #         obj = self.retorna_dano_bd(item[0])
+    #         obj.mostrar_dano()
 
     def interface_buraco(self,user):
 
@@ -471,14 +464,14 @@ class SRCB(object):
 
         print('Saindo do painel de buracos...')
 
-    def consultar_buracos(self,user):
+    def consultar_buracos(self, user):
 
-        db_cursor.execute("SELECT * FROM buraco WHERE registadoPor = :registadoPor ",
-                          {'registadoPor': user.identificador})
+        db_cursor.execute("SELECT * FROM buraco WHERE registradoPor = :registradoPor ",
+                          {'registradoPor': user.identificador})
         lst = db_cursor.fetchall()
 
         if not lst:
-            print(">> Nenhum buraco nao encontrado")
+            print(">> Nenhum buraco encontrado")
             return
 
         for entry in lst:
@@ -555,9 +548,9 @@ class SRCB(object):
         print('Saindo do painel de atualizacao de buraco...')
 
     def excluir_buraco(self,user):
+        idBuraco = input('>> Insira o identificador do buraco:\n> ')
         confirm = input('>> Deseja realmente excluir o buraco ? [S/s]')
         if confirm == 'S' or confirm == 's':
-            idBuraco = input('>> Insira o identificador do buraco:\n> ')
             buraco = self.retorna_buraco_bd(idBuraco)
             buraco.remover_buraco_db()
 
@@ -669,3 +662,216 @@ class SRCB(object):
                 reparo = self.retorna_reparo_bd(entry[0])
                 if reparo is not None:
                     reparo.ordem_atualizada(ordem)
+
+    def interface_dano_recebido(self,user):
+
+        selection = {
+            '1': 'consultar_danos',
+            '2': 'registrar_dano',  #
+            '3': 'modificar_dano',  #
+            '4': 'excluir_dano',  #
+        }
+
+        while (1):
+            print(''' [ Bem vindo ao painel de danos recebidos ]
+                                 1) Consultar danos registrados pelo seu usuario
+                                 2) Registrar dano recebido
+                                 3) Modificar dano recebido
+                                 4) Excluir dano recebido
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if (option == '5'):
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de danos recebidos...')
+
+    def consultar_danos(self, user):
+
+        db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
+                          {'idCidadao': user.identificador})
+        lst = db_cursor.fetchall()
+
+        if not lst:
+            print(">> Nenhum dano encontrado")
+            return
+
+        for entry in lst:
+            dano = self.retorna_dano_bd(entry[0])
+            dano.mostrar_dano()
+
+    def registrar_dano(self, user):  # tipoDeDano, pagamento, idBuraco, idCidadao
+        tipoDeDano = input('>> Informe o tipo de dano:')
+        pagamento = randint(0,9999)
+        idBuraco = input('>> Insira o identificador do buraco causador do dano :')
+        idCidadao = user.identificador
+
+        dano = Dano(tipoDeDano,pagamento,idBuraco,idCidadao)
+
+        dano.inserir_dano_db()
+
+    def modificar_dano(self, user):
+        idDano = input('>> Insira o identificador do dano:\n> ')
+        dano = self.retorna_dano_bd(idDano)
+        if dano is None:
+            print('>> Dano nao encontrado')
+            return
+
+        selection = {
+            '1': 'atualizar_tipoDeDano',
+            '2': 'atualizar_pagamento',
+            '3': 'atualizar_idBuraco',
+            '4': 'atualizar_idCidadao',
+        }
+
+        identificador_old = dano.idDano
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de dano ]\n [ Selecione o atributo a ser atualizado: ]
+                                         1) Tipo de dano
+                                         2) Pagamento
+                                         3) Buraco que causou o dano
+                                         4) Cidadao que recebeu o dano
+                                         5) Sair
+                                         ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            elif option == '2' :
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = int(input('> '))
+                dano.atualizar_pagamento(novo_valor)
+                print('> Valor atualizado!')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = int(input('> '))
+                try:
+                    getattr(dano, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        #verificar se mudancas em dano repercutem em mudancas em outros registros
+
+        print('Saindo do painel de atualizacao de buraco...')
+
+    def excluir_dano(self, user):
+        idDano = input('>> Insira o identificador do dano:\n> ')
+        confirm = input('>> Deseja realmente excluir o dano ? [S/s]')
+        if confirm == 'S' or confirm == 's':
+            dano = self.retorna_dano_bd(idDano)
+            dano.remover_dano_db()
+
+        print('Voltando...')
+        return
+
+    def realizar_consulta_geral(self, user):
+        print('[ Consulta geral ]')
+        self.consultar_danos(user)
+
+        db_cursor.execute("SELECT * FROM buraco WHERE registradoPor = :registradoPor ",
+                          {'registradoPor': user.identificador})
+        lst = db_cursor.fetchall()
+
+        if not lst:
+            print(">> Nenhum buraco encontrado")
+            return
+
+        for entry in lst:
+            buraco = self.retorna_buraco_bd(entry[0])
+            ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+            reparo = self.retorna_reparo_bd(entry[0])
+            if ordem is not None:
+                if reparo is not None:
+                    reparo.mostrar_reparo()
+                else:
+                    ordem.mostrar_ordem_de_trabalho()
+            else:
+                buraco.mostrar_buraco()
+
+    def consultar_arquivos_de_dano(self, user):
+        print('[ Arquivo de danos do usuario ]')
+        self.consultar_danos(user)
+
+    def gerar_relatorio(self,user):
+        self.realizar_consulta_geral(user)
+        #por enquanto assim ate definir a forma do relatorio
+        #fazer o mesmo retorno porem em um arquivo ?
+
+    def consultar_cadastro_funcionario(self, user):
+        while 1:
+            print('''[ Painel de consulta de cadastro ]
+                        1) Consultar o proprio cadastro
+                        2) Consultar outro cadastro
+                        3) Sair
+            ''')
+            option = input('> ')
+            if option == '1':
+                user.mostrar_cadastro_funcionario()
+            elif option == '2':
+                identificador = input('>> Insira o identificador do usuario: \n> ')
+                other_user = self.retorna_funcionario_bd(identificador)
+                if other_user is None:
+                    other_user = self.retorna_cidadao_bd(identificador)
+                    other_user.mostrar_cadastro()
+                else:
+                    other_user.mostrar_cadastro_funcionario()
+            elif option == '3':
+                print('Saindo...')
+                return
+            else:
+                print('>> Opcao invalida')
+
+
+    def modificar_cadastro_funcionario(self, user):
+        pass
+    #deseja modificar o proprio cadastro ou de algum cidadao?
+    #se cidadao self.modificar_cadastro_cidadao(cidadao)
+
+    def excluir_cadastro_funcionario(self, user):
+        pass
+
+    def cadastrar_funcionario(self, user):
+        print('''[ Painel de cadastro de funcionario ]''')
+        identificador = input('>> Insira o identificador do cidadao a ser cadastrado como funcionario: \n> ')
+
+        cidadao = self.retorna_cidadao_bd(identificador)
+
+        if cidadao is None:
+            print('>> Cidadao nao encontrado')
+            return
+        else:
+            cargo = input('> Insira o cargo:')
+            salario = input('> Insira o salario')
+            funcionario = Funcionario(cidadao.nome, cidadao.cpf, cidadao.identidade, cidadao.filiacao, cidadao.sexo,
+                                      cidadao.estadoCivil, cidadao.naturalidade, cidadao.endereco, cidadao.email,
+                                      cidadao.profissao, cargo, salario)
+            cidadao.atualizar_funcionario(True)
+            funcionario.inserir_funcionario_db()
+
+
+    def interface_material_de_reparo(self, user):
+        pass
+
+    def interface_ordem_de_trabalho(self, user):
+        pass
+
+    def interface_equipamento(self, user):
+        pass
+
+    def interface_equipe_de_reparo(self, user):
+        pass
+
+    def interface_reparo(self, user):
+        pass
+

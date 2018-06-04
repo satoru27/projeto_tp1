@@ -9,10 +9,10 @@ class Endereco(object):
         self.bairro = bairro
 
     def mostrar_endereco(self):
-        print(f''' <Endereco>
-        Cidade: {self.cidade}
-        UF: {self.uf}
-        Bairro: {self.bairro}
+        print(f''' \t<Endereco>
+        \tCidade: {self.cidade}
+        \tUF: {self.uf}
+        \tBairro: {self.bairro}
         ''')
 
     def string_endereco(self):
