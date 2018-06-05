@@ -136,6 +136,10 @@ class SRCB(object):
     def interface_funcionario(self):
         user = self.login_funcionario()
 
+        if user == None:
+            print('>> Falha no login!')
+            return
+
         selection = {
             '1': 'consultar_cadastro_funcionario',
             '2': 'modificar_cadastro_funcionario',
@@ -813,7 +817,8 @@ class SRCB(object):
             print('''[ Painel de consulta de cadastro ]
                         1) Consultar o proprio cadastro
                         2) Consultar outro cadastro
-                        3) Sair
+                        3) Mostrar todos os cadastros
+                        4) Sair
             ''')
             option = input('> ')
             if option == '1':
@@ -826,20 +831,141 @@ class SRCB(object):
                     other_user.mostrar_cadastro()
                 else:
                     other_user.mostrar_cadastro_funcionario()
+
+            elif option == '3':
+
+                with db_connection:
+                    db_cursor.execute("SELECT * FROM cidadao")
+                    lst = db_cursor.fetchall()
+
+                    for entry in lst:
+                        user = self.retorna_funcionario_bd(entry[0])
+
+                        if user is None:
+                            user = self.retorna_cidadao_bd(entry[0])
+                            user.mostrar_cadastro()
+
+                        else:
+                            user.mostrar_cadastro_funcionario()
+
+            elif option == '4':
+                print('Saindo...')
+                return
+            else:
+                print('>> Opcao invalida')
+
+    def modificar_cadastro_funcionario(self, user):
+        while 1:
+            print('''[ Painel de modificacao de cadastro ]
+                        1) Modificar o proprio cadastro
+                        2) Modificar outro cadastro
+                        3) Sair
+            ''')
+            option = input('> ')
+            if option == '1':
+                print('''
+                            1) Modificar informacoes de cidadao
+                            2) Modificar informacoes de funcionario
+                ''')
+                option = input('> ')
+                if option == '1':
+                    self.modificar_cadastro_cidadao(user)
+
+                elif option == '2':
+                    print('''[ Selecione o campo a ser modificado ]
+                                1) Cargo
+                                2) Salario
+                            ''')
+                    option = input('> ')
+                    novo_valor = input('>> Insira o novo valor: \n> ')
+
+                    if option == '1':
+                        user.atualizar_cargo(novo_valor)
+
+                    elif option == '2':
+                        user.atualizar_salario(novo_valor)
+
+                    else:
+                        print('>> Opcao invalida')
+
+                else:
+                    print('>> Opcao invalida')
+
+            elif option == '2':
+                identificador = input('>> Insira o identificador do usuario: \n> ')
+                other_user = self.retorna_funcionario_bd(identificador)
+
+                if other_user is None:
+                    other_user = self.retorna_cidadao_bd(identificador)
+                    self.modificar_cadastro_cidadao(other_user)
+
+                else:
+                    print('''
+                                1) Modificar informacoes de cidadao
+                                2) Modificar informacoes de funcionario
+                                    ''')
+                    option = input('> ')
+
+                    if option == '1':
+                        self.modificar_cadastro_cidadao(other_user)
+
+                    elif option == '2':
+                        print('''[ Selecione o campo a ser modificado ]
+                                    1) Cargo
+                                    2) Salario
+                                                ''')
+                        option = input('> ')
+                        novo_valor = input('>> Insira o novo valor: \n> ')
+
+                        if option == '1':
+                            other_user.atualizar_cargo(novo_valor)
+
+                        elif option == '2':
+                            other_user.atualizar_salario(novo_valor)
+
+                        else:
+                            print('>> Opcao invalida')
+
+                    else:
+                        print('>> Opcao invalida')
             elif option == '3':
                 print('Saindo...')
                 return
             else:
                 print('>> Opcao invalida')
 
-
-    def modificar_cadastro_funcionario(self, user):
-        pass
-    #deseja modificar o proprio cadastro ou de algum cidadao?
-    #se cidadao self.modificar_cadastro_cidadao(cidadao)
-
     def excluir_cadastro_funcionario(self, user):
-        pass
+        while 1:
+            print('''[ Painel de consulta de cadastro ]
+                        1) Excluir o proprio cadastro
+                        2) Excluir outro cadastro
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '1':
+                confirm = input('>> Deseja realmente excluir o seu usuario ? [S/s]')
+                if confirm == 'S' or confirm == 's':
+                    user.remover_funcionario_db()
+
+            elif option == '2':
+                identificador = input('>> Insira o identificador do usuario: \n> ')
+                other_user = self.retorna_funcionario_bd(identificador)
+                if other_user is None:
+                    other_user = self.retorna_cidadao_bd(identificador)
+                    confirm = input('>> Deseja realmente excluir usuario (cidadao) ? [S/s]\n> ')
+                    if confirm == 'S' or confirm == 's':
+                        other_user.remover_cidadao_db()
+                else:
+                    confirm = input('>> Deseja realmente excluir usuario (funcionario) ? [S/s]\n> ')
+                    if confirm == 'S' or confirm == 's':
+                        other_user.remover_funcionario_db()
+
+            elif option == '3':
+                print('Saindo...')
+                return
+            else:
+                print('>> Opcao invalida')
 
     def cadastrar_funcionario(self, user):
         print('''[ Painel de cadastro de funcionario ]''')
@@ -851,27 +977,212 @@ class SRCB(object):
             print('>> Cidadao nao encontrado')
             return
         else:
-            cargo = input('> Insira o cargo:')
-            salario = input('> Insira o salario')
+            cargo = input('> Insira o cargo: ')
+            salario = input('> Insira o salario: ')
             funcionario = Funcionario(cidadao.nome, cidadao.cpf, cidadao.identidade, cidadao.filiacao, cidadao.sexo,
                                       cidadao.estadoCivil, cidadao.naturalidade, cidadao.endereco, cidadao.email,
                                       cidadao.profissao, cargo, salario)
             cidadao.atualizar_funcionario(True)
             funcionario.inserir_funcionario_db()
 
-
     def interface_material_de_reparo(self, user):
+
+        selection = {
+            '1': 'consultar_material',
+            '2': 'registrar_material',  #
+            '3': 'modificar_material',  #
+            '4': 'excluir_material',  #
+        }
+
+        while (1):
+            print(''' [ Bem vindo ao painel de material de reparo ]
+                                 1) Consultar material de reparo
+                                 2) Registrar material de reparo
+                                 3) Modificar material de reparo
+                                 4) Excluir material de reparo
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de material de reparo...')
+
+    def consultar_material(self):
         pass
 
-    def interface_ordem_de_trabalho(self, user):
+    def registrar_material(self):
+        pass
+
+    def modificar_material(self):
+        pass
+
+    def excluir_material(self):
         pass
 
     def interface_equipamento(self, user):
-        pass
+
+        selection = {
+            '1': 'consultar_dequipamento',
+            '2': 'registrar_equipamento',
+            '3': 'modificar_equipamento',
+            '4': 'excluir_equipamento',
+        }
+
+        while (1):
+            print(''' [ Bem vindo ao painel de danos recebidos ]
+                                 1) Consultar equipamento
+                                 2) Registrar equipamento
+                                 3) Modificar equipamento
+                                 4) Excluir equipamento
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de equipamentos...')
 
     def interface_equipe_de_reparo(self, user):
+
+        selection = {
+            '1': 'consultar_equipe',
+            '2': 'registrar_equipe',
+            '3': 'modificar_equipe',
+            '4': 'excluir_equipe',
+        }
+
+        while 1:
+            print(''' [ Bem vindo ao painel de danos recebidos ]
+                                 1) Consultar equipe de reparo
+                                 2) Registrar equipe de reparo
+                                 3) Modificar equipe de reparo
+                                 4) Excluir equipe de reparo
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de equipe de reparo...')
+
+    def consultar_equipe(self):
         pass
 
-    def interface_reparo(self, user):
+    def registrar_equipe(self):
         pass
+
+    def modificar_equipe(self):
+        pass
+
+    def excluir_equipe(self):
+        pass
+
+    def interface_ordem_de_trabalho(self, user):
+
+        selection = {
+            '1': 'consultar_ordem',
+            '2': 'registrar_ordem',
+            '3': 'modificar_ordem',
+            '4': 'excluir_ordem',
+        }
+
+        while (1):
+            print(''' [ Bem vindo ao painel de danos recebidos ]
+                                 1) Consultar ordem de trabalho
+                                 2) Registrar ordem de trabalho
+                                 3) Modificar ordem de trabalho
+                                 4) Excluir ordem de trabalho
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de ordem de trabalho...')
+
+    def consultar_ordem(self):
+        pass
+
+    def registrar_ordem(self):
+        pass
+
+    def modificar_ordem(self):
+        pass
+
+    def excluir_ordem(self):
+        pass
+
+        
+    def interface_reparo(self, user):
+
+        selection = {
+            '1': 'consultar_reparo',
+            '2': 'registrar_reparo',
+            '3': 'modificar_reparo',
+            '4': 'excluir_reparo',
+        }
+
+        while 1:
+            print(''' [ Bem vindo ao painel de danos recebidos ]
+                                 1) Consultar reparo
+                                 2) Registrar reparo
+                                 3) Modificar reparo
+                                 4) Excluir reparo
+                                 5) Sair
+                                 ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])(user)
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de reparos...')
+
+    def consultar_reparo(self):
+        pass
+
+    def registrar_reparo(self):
+        pass
+
+    def modificar_reparo(self):
+        pass
+
+    def excluir_reparo(self):
+        pass
+
+
 
