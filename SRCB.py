@@ -326,11 +326,11 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
 #descricao, valor, quantidade, tipo
         obj = Material(lst[1], lst[2], lst[3], lst[4])
 
-        obj.mostrar_material()
+        #obj.mostrar_material()
 
         return obj
 
@@ -989,12 +989,12 @@ class SRCB(object):
 
         selection = {
             '1': 'consultar_material',
-            '2': 'registrar_material',  #
-            '3': 'modificar_material',  #
-            '4': 'excluir_material',  #
+            '2': 'registrar_material',
+            '3': 'modificar_material',
+            '4': 'excluir_material',
         }
 
-        while (1):
+        while 1:
             print(''' [ Bem vindo ao painel de material de reparo ]
                                  1) Consultar material de reparo
                                  2) Registrar material de reparo
@@ -1016,7 +1016,45 @@ class SRCB(object):
         print('Saindo do painel de material de reparo...')
 
     def consultar_material(self):
-        pass
+
+        selection = {
+            '1': 'consultar_todos_materiais',
+            '2': 'consultar_material_especifico'
+        }
+
+        while 1:
+            print('''[ Painel de consulta de material de reparo ]
+                        1) Consultar todos os materiais
+                        2) Consultar material especifico
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '3':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+    def consultar_todos_materiais(self):
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM material")
+        lst = db_cursor.fetchall()
+        for entry in lst:
+            material = self.retorna_material_bd(entry[0])
+            material.mostrar_material()
+
+    def consultar_material_especifico(self):
+        codigo = input('>> Insira o codigo do material a ser consultado: \n> ')
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM material WHERE codigo = :codigo",{'codigo':codigo})
+        lst = db_cursor.fetchall()
+        entry = lst[0]
+        material = self.retorna_material_bd(entry[0])
+        material.mostrar_material()
+
 
     def registrar_material(self):
         pass
@@ -1030,14 +1068,14 @@ class SRCB(object):
     def interface_equipamento(self, user):
 
         selection = {
-            '1': 'consultar_dequipamento',
+            '1': 'consultar_equipamento',
             '2': 'registrar_equipamento',
             '3': 'modificar_equipamento',
             '4': 'excluir_equipamento',
         }
 
         while (1):
-            print(''' [ Bem vindo ao painel de danos recebidos ]
+            print(''' [ Bem vindo ao painel de equipamento ]
                                  1) Consultar equipamento
                                  2) Registrar equipamento
                                  3) Modificar equipamento
@@ -1057,6 +1095,57 @@ class SRCB(object):
 
         print('Saindo do painel de equipamentos...')
 
+
+    def consultar_equipamento(self):
+
+        selection = {
+            '1': 'consultar_todos_equipamentos',
+            '2': 'consultar_equipamento_especifico'
+        }
+
+        while 1:
+            print('''[ Painel de consulta de equipamento ]
+                        1) Consultar todos os equipamentos
+                        2) Consultar equipamento especifico
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '3':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+    def consultar_todos_equipamentos(self):
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM equipamento")
+        lst = db_cursor.fetchall()
+        for entry in lst:
+            equipamento = self.retorna_equipamento_bd(entry[0])
+            equipamento.mostrar_equipamento()
+
+    def consultar_equipamento_especifico(self):
+        codigo = input('>> Insira o codigo do equipamento a ser consultado: \n> ')
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM equipamento WHERE codigo = :codigo", {'codigo': codigo})
+        lst = db_cursor.fetchall()
+        entry = lst[0]
+        equipamento = self.retorna_equipamento_bd(entry[0])
+        equipamento.mostrar_equipamento()
+
+    def registrar_equipamento(self):
+        pass
+
+    def modificar_equipamento(self):
+        pass
+
+    def excluir_equipamento(self):
+        pass
+
+
     def interface_equipe_de_reparo(self, user):
 
         selection = {
@@ -1067,7 +1156,7 @@ class SRCB(object):
         }
 
         while 1:
-            print(''' [ Bem vindo ao painel de danos recebidos ]
+            print(''' [ Bem vindo ao painel de equipe de reparo ]
                                  1) Consultar equipe de reparo
                                  2) Registrar equipe de reparo
                                  3) Modificar equipe de reparo
@@ -1088,7 +1177,45 @@ class SRCB(object):
         print('Saindo do painel de equipe de reparo...')
 
     def consultar_equipe(self):
-        pass
+
+        selection = {
+            '1': 'consultar_todas_equipes',
+            '2': 'consultar_equipe_especifica'
+        }
+
+        while 1:
+            print('''[ Painel de consulta de equipe ]
+                        1) Consultar todas as equipes de reparo
+                        2) Consultar equipe de reparo especifica
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '3':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+    def consultar_todas_equipes(self):
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM equipeDeReparo")
+        lst = db_cursor.fetchall()
+        for entry in lst:
+            equipe_de_reparo = self.retorna_equipe_de_reparo_bd(entry[0])
+            equipe_de_reparo.mostrar_equipe_de_reparo()
+
+    def consultar_equipe_especifica(self):
+        identificador = input('>> Insira o identificador da equipe a ser consultada: \n> ')
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM equipeDeReparo WHERE identificador = :identificador",
+                          {'identificador': identificador})
+        lst = db_cursor.fetchall()
+        entry = lst[0]
+        equipe_de_reparo = self.retorna_equipe_de_reparo_bd(entry[0])
+        equipe_de_reparo.mostrar_equipe_de_reparo()
 
     def registrar_equipe(self):
         pass
@@ -1108,8 +1235,8 @@ class SRCB(object):
             '4': 'excluir_ordem',
         }
 
-        while (1):
-            print(''' [ Bem vindo ao painel de danos recebidos ]
+        while 1:
+            print(''' [ Bem vindo ao painel de ordem de trabalho ]
                                  1) Consultar ordem de trabalho
                                  2) Registrar ordem de trabalho
                                  3) Modificar ordem de trabalho
@@ -1130,7 +1257,45 @@ class SRCB(object):
         print('Saindo do painel de ordem de trabalho...')
 
     def consultar_ordem(self):
-        pass
+
+        selection = {
+            '1': 'consultar_todas_ordens',
+            '2': 'consultar_ordem_especifica'
+        }
+
+        while 1:
+            print('''[ Painel de consulta de ordens ]
+                        1) Consultar todas as ordens de trabalho
+                        2) Consultar ordem de trabalho especifica
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '3':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+    def consultar_todas_ordens(self):
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM ordemDeTrabalho")
+        lst = db_cursor.fetchall()
+        for entry in lst:
+            ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+            ordem.mostrar_ordem_de_trabalho()
+
+    def consultar_ordem_especifica(self):
+        identificador = input('>> Insira o identificador da ordem a ser consultada: \n> ')
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE identificador = :identificador",
+                          {'identificador': identificador})
+        lst = db_cursor.fetchall()
+        entry = lst[0]
+        ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+        ordem.mostrar_ordem_de_trabalho()
 
     def registrar_ordem(self):
         pass
@@ -1141,7 +1306,7 @@ class SRCB(object):
     def excluir_ordem(self):
         pass
 
-        
+
     def interface_reparo(self, user):
 
         selection = {
@@ -1152,7 +1317,7 @@ class SRCB(object):
         }
 
         while 1:
-            print(''' [ Bem vindo ao painel de danos recebidos ]
+            print(''' [ Bem vindo ao painel de reparos ]
                                  1) Consultar reparo
                                  2) Registrar reparo
                                  3) Modificar reparo
@@ -1173,7 +1338,45 @@ class SRCB(object):
         print('Saindo do painel de reparos...')
 
     def consultar_reparo(self):
-        pass
+
+        selection = {
+            '1': 'consultar_todos_reparos',
+            '2': 'consultar_reparo_especifico'
+        }
+
+        while 1:
+            print('''[ Painel de consulta de reparo ]
+                        1) Consultar todas os reparos
+                        2) Consultar reparo especifica
+                        3) Sair
+            ''')
+            option = input('> ')
+
+            if option == '3':
+                break
+            else:
+                try:
+                    getattr(self, selection[option])()
+                except KeyError:
+                    print('Opcao invalida')
+
+    def consultar_todos_reparos(self):
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM reparo")
+        lst = db_cursor.fetchall()
+        for entry in lst:
+            reparo = self.retorna_reparo_bd(entry[0])
+            reparo.mostrar_reparo()
+
+    def consultar_reparo_especifico(self):
+        identificador = input('>> Insira o identificador do reparo a ser consultado: \n> ')
+        #with db_connection:
+        db_cursor.execute("SELECT * FROM reparo WHERE identificador = :identificador",
+                          {'identificador': identificador})
+        lst = db_cursor.fetchall()
+        entry = lst[0]
+        reparo = self.retorna_reparo_bd(entry[0])
+        reparo.mostrar_reparo()
 
     def registrar_reparo(self):
         pass
