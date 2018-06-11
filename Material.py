@@ -2,7 +2,7 @@ import hashlib as hs
 import sqlite3 as sql
 from pathlib import Path
 
-DEBUG_FLAG = True
+DEBUG_FLAG = False
 
 database = 'srcb.db'
 #myFile = Path(database)

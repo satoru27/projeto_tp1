@@ -306,11 +306,11 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
 
         obj = Equipamento(lst[1], lst[2], lst[3], lst[4])
 
-        obj.mostrar_equipamento()
+        #obj.mostrar_equipamento()
 
         return obj
 
@@ -346,11 +346,11 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
-        print(lst)
+        #print(lst)
         # numeroDePessoas, funcionarios
         obj = EquipeDeReparo(int(lst[1]), lst[2].split(','))
 
-        obj.mostrar_equipe_de_reparo()
+        #obj.mostrar_equipe_de_reparo()
 
         return obj
 
@@ -368,7 +368,7 @@ class SRCB(object):
         lst = lst[0]
         #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor
-        obj = Buraco(self.retorna_obj_endereco(lst[1]),int(lst[2]),lst[3],int(lst[4]),lst[5])
+        obj = Buraco(self.retorna_obj_endereco(lst[1]), int(lst[2]), lst[3], int(lst[4]),lst[5])
 
         #obj.mostrar_buraco()
 
@@ -386,11 +386,15 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
+
+        equipamento = lst[10]
+        equipamento = equipamento.split(',')
+
         #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
         #     descricao,situacao, equipeDeReparo, equipamentos, horasAplicadas
         obj = OrdemDeTrabalho(self.retorna_obj_endereco(lst[1]), int(lst[2]), lst[3], int(lst[4]), lst[5],
-                              lst[7],lst[8],lst[9],lst[10],int(lst[11]))
+                              lst[7],lst[8],lst[9],equipamento,int(lst[11]))
 
         #obj.mostrar_ordem_de_trabalho()
 
@@ -408,35 +412,24 @@ class SRCB(object):
             return obj
 
         lst = lst[0]
+
+        equipamento = lst[10]
+        equipamento = equipamento.split(',')
+
+        material = lst[15]
+        material = material.split(',')
+
         #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
         #     descricao,situacao, equipeDeReparo, equipamentos, horasAplicadas
         # descricaoReparo, status, materialUtilizado
         obj = Reparo(self.retorna_obj_endereco(lst[1]), int(lst[2]), lst[3], int(lst[4]), lst[5],
-                              lst[7], lst[8], lst[9], lst[10], int(lst[11]),
-                              lst[13],lst[14],lst[15])
+                              lst[7], lst[8], lst[9], equipamento, int(lst[11]),
+                              lst[13],lst[14],material)
 
         #obj.mostrar_reparo()
 
         return obj
-    #
-    # def retorna__bd(self, identificador):
-    #     pass
-
-    # def consultar_arquivos_de_dano(self,user):
-    #     obj = None
-    #
-    #     db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
-    #                       {'idCidadao': user.identificador})
-    #     lst = db_cursor.fetchall()
-    #
-    #     if not lst:
-    #         print('>> Nao existem danos registrados para esse usuario')
-    #         return
-    #
-    #     for item in lst:
-    #         obj = self.retorna_dano_bd(item[0])
-    #         obj.mostrar_dano()
 
     def interface_buraco(self,user):
 
@@ -484,7 +477,8 @@ class SRCB(object):
 
     def registrar_buraco(self,user):#endereco, tamanho, localizacao, prioridade, registradoPor
         endereco = self.novo_endereco()
-        tamanho = int(input('>> Insira o tamanho: '))
+        print('>> Insira o tamanho: ')
+        tamanho = self.valid_int_input()
         localizacao = input('>> Insira a localizacao :')
         prioridade = randint(0,9)
         print(f'>> Prioridade: {prioridade}')
@@ -531,7 +525,7 @@ class SRCB(object):
 
             elif option == '2' or option == '4':
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = int(input('> '))
+                novo_valor = self.valid_int_input()
                 try:
                     getattr(buraco, selection[option])(novo_valor)
                     print('> Valor atualizado!')
@@ -540,7 +534,7 @@ class SRCB(object):
 
             else:
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = int(input('> '))
+                novo_valor = self.valid_int_input()
                 try:
                     getattr(buraco, selection[option])(novo_valor)
                     print('> Valor atualizado!')
@@ -752,13 +746,13 @@ class SRCB(object):
                 break
             elif option == '2' :
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = int(input('> '))
+                novo_valor = self.valid_int_input()
                 dano.atualizar_pagamento(novo_valor)
                 print('> Valor atualizado!')
 
             else:
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = int(input('> '))
+                novo_valor = self.valid_int_input()
                 try:
                     getattr(dano, selection[option])(novo_valor)
                     print('> Valor atualizado!')
@@ -936,7 +930,7 @@ class SRCB(object):
 
     def excluir_cadastro_funcionario(self, user):
         while 1:
-            print('''[ Painel de consulta de cadastro ]
+            print('''[ Painel de exclusao de cadastro ]
                         1) Excluir o proprio cadastro
                         2) Excluir outro cadastro
                         3) Sair
@@ -1055,15 +1049,79 @@ class SRCB(object):
         material = self.retorna_material_bd(entry[0])
         material.mostrar_material()
 
+    def registrar_material(self):#descricao, valor, quantidade, tipo
+        descricao = input('>> Insira a descricao do material: ')
+        print('>> Insira o valor do material: ')
+        valor = self.valid_int_input()
+        print('>> Insira a quantidade do material: ')
+        quantidade = self.valid_int_input()
+        tipo = input('>> Insira o tipo do material: ')
 
-    def registrar_material(self):
-        pass
+        material = Material(descricao,valor,quantidade,tipo)
+
+        material.inserir_material_db()
 
     def modificar_material(self):
-        pass
+        identificador = input('>> Insira o identificador do material:\n> ')
+        material = self.retorna_material_bd(identificador)
+        if material is None:
+            print('>> Material nao encontrado')
+            return
+
+        selection = {
+            '1': 'atualizar_descricao',
+            '2': 'atualizar_valor',
+            '3': 'atualizar_quantidade',
+            '4': 'atualizar_tipo',
+        }
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de material ]\n [ Selecione o atributo a ser atualizado: ]
+                                                     1) Descricao
+                                                     2) Valor
+                                                     3) Quantidade
+                                                     4) Tipo
+                                                     5) Sair
+                                                     ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+
+            elif option == '2' or option == '3':
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = self.valid_int_input()
+                getattr(material, selection[option])(novo_valor)
+                print('> Valor atualizado!')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = input('> ')
+                try:
+                    getattr(material, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        ## afeta reparo
+
+        print('Saindo do painel de atualizacao de material...')
 
     def excluir_material(self):
-        pass
+        print('''[ Painel de exclusao de material ]''')
+        codigo = input('>> Insira o codigo do material a ser excluido: \n> ')
+        material = self.retorna_material_bd(codigo)
+
+        if material is None:
+            print('> Material nao encontrado!')
+            return
+
+        confirm = input('>> Deseja realmente excluir o material ? [S/s]')
+        if confirm == 'S' or confirm == 's':
+            material.remover_material_db()
+            print('> Material excluido com sucesso')
+
 
     def interface_equipamento(self, user):
 
@@ -1089,7 +1147,7 @@ class SRCB(object):
                 break
             else:
                 try:
-                    getattr(self, selection[option])(user)
+                    getattr(self, selection[option])()
                 except KeyError:
                     print('Opcao invalida')
 
@@ -1136,15 +1194,77 @@ class SRCB(object):
         equipamento = self.retorna_equipamento_bd(entry[0])
         equipamento.mostrar_equipamento()
 
-    def registrar_equipamento(self):
-        pass
+    def registrar_equipamento(self):# descricao, fabricante, tamanho, peso
+        descricao = input('>> Insira a descricao do equipamento: ')
+        fabricante = input('>> Insira o fabricante do equipamento: ')
+        print('>> Insira o tamanho do equipamento: ')
+        tamanho = self.valid_int_input()
+        print('>> Insira o peso do equipamento: ')
+        peso = self.valid_int_input()
+
+        equipamento = Equipamento(descricao, fabricante, tamanho, peso)
+
+        equipamento.inserir_equipamento_db()
 
     def modificar_equipamento(self):
-        pass
+        identificador = input('>> Insira o identificador do equipamento:\n> ')
+        equipamento = self.retorna_equipamento_bd(identificador)
+        if equipamento is None:
+            print('>> Equipamento nao encontrado')
+            return
+
+        selection = {
+            '1': 'atualizar_descricao',
+            '2': 'atualizar_fabricante',
+            '3': 'atualizar_tamanho',
+            '4': 'atualizar_peso',
+        }
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de equipamento ]\n [ Selecione o atributo a ser atualizado: ]
+                                                             1) Descricao
+                                                             2) Fabricante
+                                                             3) Tamanho
+                                                             4) Peso
+                                                             5) Sair
+                                                             ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+
+            elif option == '3' or option == '4':
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = self.valid_int_input()
+                getattr(equipamento, selection[option])(novo_valor)
+                print('> Valor atualizado!')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = input('> ')
+                try:
+                    getattr(equipamento, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+                    
+        # gera mudancas em ordem de trabalho
+        print('Saindo do painel de atualizacao de equipamento...')
 
     def excluir_equipamento(self):
-        pass
+        print('''[ Painel de exclusao de equipamento ]''')
+        codigo = input('>> Insira o codigo do equipamento a ser excluido: \n> ')
+        equipamento = self.retorna_equipamento_bd(codigo)
 
+        if equipamento is None:
+            print('> Equipamento nao encontrado!')
+            return
+
+        confirm = input('>> Deseja realmente excluir o equipamento ? [S/s]')
+        if confirm == 'S' or confirm == 's':
+            equipamento.remover_equipamento_db()
+            print('> Equipamento excluido com sucesso')
 
     def interface_equipe_de_reparo(self, user):
 
@@ -1170,7 +1290,7 @@ class SRCB(object):
                 break
             else:
                 try:
-                    getattr(self, selection[option])(user)
+                    getattr(self, selection[option])()
                 except KeyError:
                     print('Opcao invalida')
 
@@ -1217,14 +1337,70 @@ class SRCB(object):
         equipe_de_reparo = self.retorna_equipe_de_reparo_bd(entry[0])
         equipe_de_reparo.mostrar_equipe_de_reparo()
 
-    def registrar_equipe(self):
-        pass
+    def registrar_equipe(self):#numeroDePessoas, funcionarios
+        print('>> Insira o numero de pessoas na equipe: ')
+        numero_de_pessoas = self.valid_int_input()
+        funcionarios = []
 
-    def modificar_equipe(self):
-        pass
+        for i in range(0, numero_de_pessoas):
+            temp = input('>> Insira o nome do integrante da equipe: ')
+            funcionarios.append(temp)
+
+        equipe = EquipeDeReparo(numero_de_pessoas, funcionarios)
+
+        equipe.inserir_equipe_de_reparo_db()
+
+    def modificar_equipe(self): # gera mudancas em ordem
+        identificador = input('>> Insira o identificador do material:\n> ')
+        equipe = self.retorna_equipe_de_reparo_bd(identificador)
+
+        if equipe is None:
+            print('>> Equipe nao encontrado')
+            return
+
+        identificador_old = equipe.identificador
+
+        print('>> Insira o numero de pessoas na equipe: ')
+        numero_de_pessoas = self.valid_int_input()
+        funcionarios = []
+
+        for i in range(0, numero_de_pessoas):
+            temp = input('>> Insira o nome do integrante da equipe: ')
+            funcionarios.append(temp)
+
+        equipe.atualizar_numeroDePessoas(numero_de_pessoas)
+        equipe.atualizar_funcionarios(funcionarios)
+
+        self.equipe_modificada_atualiza_ordem(identificador_old)
+
+        print('Saindo do painel de atualizacao de equipamento...')
+
+    def equipe_modificada_atualiza_ordem(self, identificador_equipe):
+        db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE equipeDeReparo = :identificador ",
+                          {'identificador': identificador_equipe})
+
+        lst = db_cursor.fetchall()
+
+        for entry in lst:
+            ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
+            if ordem is not None:
+                id_old_ordem = ordem.identificador
+                ordem.atualizar_equipeDeReparo(identificador_equipe)
+                self.ordem_modificada_atualiza_reparo(ordem,id_old_ordem)
 
     def excluir_equipe(self):
-        pass
+        print('''[ Painel de exclusao de equipe ]''')
+        codigo = input('>> Insira o codigo da equipe a ser excluida: \n> ')
+        equipe = self.retorna_equipe_de_reparo_bd(codigo)
+
+        if equipe is None:
+            print('> Equipe nao encontrada!')
+            return
+
+        confirm = input('>> Deseja realmente excluir a equipe ? [S/s] \n> ')
+        if confirm == 'S' or confirm == 's':
+            equipe.remover_equipe_de_reparo_db()
+            print('> Equipe excluida com sucesso')
 
     def interface_ordem_de_trabalho(self, user):
 
@@ -1298,14 +1474,125 @@ class SRCB(object):
         ordem.mostrar_ordem_de_trabalho()
 
     def registrar_ordem(self):
-        pass
+        # endereco, tamanho, localizacao, prioridade,registradoPor,
+        # descricao,situacao, equipeDeReparo, equipamentos, horasAplicadas
+
+        identificador_buraco = input('>> Insira o identificador do buraco sobre o qual sera criado a ordem de trabalho:'
+                                     '\n> ')
+        buraco = self.retorna_buraco_bd(identificador_buraco)
+
+        if buraco is None:
+            print('> Buraco nao encontrado ')
+            return
+
+        descricao = input('>> Insira a descricao da ordem de trabalho: ')
+        situacao = input('>> Insira a situacao da ordem de trabalho: ')
+        equipeDeReparo = input('>> Insira o identificador da equipe de reparo responsavel: ')
+
+        print('>> Insira o numero de equipamentos utilizados: ')
+        numero_de_equipamentos = self.valid_int_input()
+        equipamentos = []
+        for i in range(0, numero_de_equipamentos):
+            temp = input('>> Insira o identificador do equipamento: ')
+            equipamentos.append(temp)
+
+        ##debug
+        #print('####' + equipamentos)
+
+        print('>> Insira a quantidade de horas aplicadas: ')
+        horasAplicadas = self.valid_int_input()
+
+        ordem = OrdemDeTrabalho(buraco.endereco, buraco.tamanho, buraco.localizacao, buraco.prioridade,
+                                buraco.registradoPor, descricao, situacao, equipeDeReparo, equipamentos, horasAplicadas)
+
+        ordem.inserir_ordem_de_trabalho_db()
 
     def modificar_ordem(self):
-        pass
+        identificador = input('>> Insira o identificador da ordem:\n> ')
+        ordem = self.retorna_ordem_de_trabalho_bd(identificador)
+        if ordem is None:
+            print('>> Ordem nao encontrada')
+            return
+
+        selection = {
+            '1': 'atualizar_descricao',
+            '2': 'atualizar_situacao',
+            '3': 'atualizar_equipeDeReparo',
+            '4': 'atualizar_equipamentos',
+            '5': 'atualizar_horasAplicadas'
+        }
+
+        identificador_old = ordem.identificador
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de ordem de reparo ]\n [ Selecione o atributo a ser atualizado: ]
+                                                 1) Descricao
+                                                 2) Situacao
+                                                 3) Equipe de reparo
+                                                 4) Equipamentos
+                                                 5) Horas aplicadas
+                                                 6) Sair
+                                                 ''')
+
+            option = input("> ")
+
+            if option == '6':
+                break
+
+            elif option == '5':
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = self.valid_int_input()
+                getattr(ordem, selection[option])(novo_valor)
+                print('> Valor atualizado!')
+
+            elif option == '4':
+                print('>> Insira o numero de equipamentos utilizados: ')
+                numero_de_equipamentos = self.valid_int_input()
+                equipamentos = []
+                for i in range(0, numero_de_equipamentos):
+                    temp = input('>> Insira o identificador do equipamento: ')
+                    equipamentos.append(temp)
+
+                getattr(ordem, selection[option])(equipamentos)
+                print('> Valor atualizado!')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = input('> ')
+                try:
+                    getattr(ordem, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        self.ordem_modificada_atualiza_reparo(ordem, identificador_old)
+
+        print('Saindo do painel de atualizacao de buraco...')
+
+    def ordem_modificada_atualiza_reparo(self,ordem,identificador_old):
+        db_cursor.execute("SELECT * FROM reparo WHERE identificador = :identificador ",
+                          {'identificador': identificador_old})
+
+        lst = db_cursor.fetchall()
+
+        for entry in lst:
+            reparo = self.retorna_reparo_bd(entry[0])
+            if reparo is not None:
+                reparo.ordem_atualizada(ordem)
 
     def excluir_ordem(self):
-        pass
+        print('''[ Painel de exclusao de ordem de trabalho ]''')
+        codigo = input('>> Insira o codigo da ordem de trabalho a ser excluida: \n> ')
+        ordem = self.retorna_ordem_de_trabalho_bd(codigo)
 
+        if ordem is None:
+            print('> Ordem nao encontrada!')
+            return
+
+        confirm = input('>> Deseja realmente excluir a ordem ? [S/s] \n> ')
+        if confirm == 'S' or confirm == 's':
+            ordem.remover_ordem_de_trabalho_db()
+            print('> Ordem excluida com sucesso')
 
     def interface_reparo(self, user):
 
@@ -1331,7 +1618,7 @@ class SRCB(object):
                 break
             else:
                 try:
-                    getattr(self, selection[option])(user)
+                    getattr(self, selection[option])()
                 except KeyError:
                     print('Opcao invalida')
 
@@ -1379,13 +1666,123 @@ class SRCB(object):
         reparo.mostrar_reparo()
 
     def registrar_reparo(self):
-        pass
+        # endereco, tamanho, localizacao, prioridade, registradoPor, descricao, situacao,
+        # equipeDeReparo, equipamentos, horasAplicadas,
+        # descricaoReparo, status, materialUtilizado
+
+        identificador_ordem = input('>> Insira o identificador da ordem de trabalho sobre a qual sera criado o reparo:'
+                                    '\n> ')
+
+        ordem = self.retorna_ordem_de_trabalho_bd(identificador_ordem)
+
+        if ordem is None:
+            print('> Ordem nao encontrada ')
+            return
+
+        descricaoReparo = input('>> Insira a descricao da ordem de trabalho: ')
+        status = input('>> Insira a situacao da ordem de trabalho: ')
+
+        print('>> Insira o numero de materiais utilizados: ')
+        numero_de_materiais = self.valid_int_input()
+        materialUtilizado = []
+        for i in range(0, numero_de_materiais):
+            temp = input('>> Insira o identificador do material: ')
+            materialUtilizado.append(temp)
+
+        reparo = Reparo(ordem.endereco, ordem.tamanho, ordem.localizacao, ordem.prioridade, ordem.registradoPor,
+                        ordem.descricao, ordem.situacao, ordem.equipeDeReparo, ordem.equipamentos, ordem.horasAplicadas,
+                        descricaoReparo, status, materialUtilizado)
+
+        reparo.inserir_reparo_db()
 
     def modificar_reparo(self):
-        pass
+        identificador = input('>> Insira o identificador do reparo:\n> ')
+        reparo = self.retorna_reparo_bd(identificador)
+        if reparo is None:
+            print('>> Reparo nao encontrado')
+            return
+
+        selection = {
+            '1': 'atualizar_descricaoReparo',
+            '2': 'atualizar_status',
+            '3': 'atualizar_materialUtilizado',
+            '4': 'atualizar_custo',
+        }
+
+        while 1:
+            print(''' [ Bem vindo ao painel de atualizacao de reparo ]\n [ Selecione o atributo a ser atualizado: ]
+                                             1) Descricao do reparo
+                                             2) Status
+                                             3) Material Utilizado
+                                             4) Custo
+                                             5) Sair
+                                             ''')
+
+            option = input("> ")
+
+            if option == '5':
+                break
+
+            elif option == '3':
+                print('>> Insira o numero de materiais utilizados: ')
+                numero_de_materiais = self.valid_int_input()
+                materialUtilizado = []
+                for i in range(0, numero_de_materiais):
+                    temp = input('>> Insira o identificador do material: ')
+                    materialUtilizado.append(temp)
+
+                getattr(reparo, selection[option])(materialUtilizado)
+                print('> Valor atualizado!')
+
+            elif option == '4':
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = self.valid_int_input()
+                getattr(reparo, selection[option])(novo_valor)
+                print('> Valor atualizado!')
+
+            else:
+                print('>> Insira o novo valor do atributo: ')
+                novo_valor = input('> ')
+                try:
+                    getattr(reparo, selection[option])(novo_valor)
+                    print('> Valor atualizado!')
+                except KeyError:
+                    print('Opcao invalida')
+
+        print('Saindo do painel de atualizacao de reparo...')
 
     def excluir_reparo(self):
-        pass
+        print('''[ Painel de exclusao de reparo ]''')
+        codigo = input('>> Insira o codigo do reparo a ser excluido: \n> ')
+        reparo = self.retorna_reparo_bd(codigo)
+
+        if reparo is None:
+            print('> Reparo nao encontrado!')
+            return
+
+        confirm = input('>> Deseja realmente excluir o reparo ? [S/s] \n> ')
+        if confirm == 'S' or confirm == 's':
+            reparo.remover_reparo_db()
+            print('> Reparo excluido com sucesso')
+
+    def int_input(self):
+        while True:
+            valor = input('> ')
+            try:
+                valor = int(valor)
+                return valor
+            except ValueError:
+                print('>> Insira um inteiro valido')
+
+    def valid_int_input(self):
+        while True:
+            valor = self.int_input()
+            if valor > 0:
+                return valor
+            else:
+                print('>> Insira um valor positivo')
+
+
 
 
 

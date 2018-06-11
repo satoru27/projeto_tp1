@@ -131,7 +131,11 @@ class Reparo(OrdemDeTrabalho):
             db_cursor.execute("UPDATE reparo SET materialUtilizado = :materialUtilizado WHERE identificador = :identificador",
                               {'materialUtilizado': ','.join(self.materialUtilizado), 'identificador': self.identificador})
 
-    def atualizar_custo(self):
+    def atualizar_custo(self,novo_valor):
+        self.custo = novo_valor
         with db_connection:
             db_cursor.execute("UPDATE reparo SET custo = : custo WHERE identificador = :identificador",
                               {'custo': self.custo, 'identificador': self.identificador})
+
+    def calcula_custo(self):
+        pass

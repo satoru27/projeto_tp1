@@ -94,7 +94,6 @@ class Equipamento(object):
             db_cursor.execute("UPDATE equipamento SET tamanho = :tamanho WHERE codigo = :codigo",
                               {'tamanho': self.tamanho, 'codigo': self.codigo})
 
-
     def atualizar_peso(self, novo_valor):
         self.peso = novo_valor
         with db_connection:
