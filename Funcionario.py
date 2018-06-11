@@ -72,7 +72,7 @@ class Funcionario(Cidadao):
             if DEBUG_FLAG:
                 print(lst)
 
-        db_connection.close()
+        #db_connection.close()
 
     def remover_funcionario_db(self):
         with db_connection:
@@ -154,64 +154,3 @@ class Funcionario(Cidadao):
         with db_connection:
             db_cursor.execute("UPDATE funcionario SET salario = :salario WHERE identificador = :identificador",
                               {'salario': self.salario, 'identificador': self.identificador})
-
-    # def inserirMaterialDeReparo(self):
-    #     pass
-    #
-    # def modificarMaterialDeReparo(self):
-    #     pass
-    #
-    # def removerMaterialDeReparo(self):
-    #     pass
-    #
-    # def mostrarMaterialDeReparo(self):
-    #     pass
-    #
-    # def inserirEquipamento(self):
-    #     pass
-    #
-    # def modificarEquipamento(self):
-    #     pass
-    #
-    # def removerEquipamento(self):
-    #     pass
-    #
-    # def mostrarEquipament(self):
-    #     pass
-    #
-    # def inserirEquipe(self):
-    #     pass
-    #
-    # def modificarEquipe(self):
-    #     pass
-    #
-    # def removerEquipe(self):
-    #     pass
-    #
-    # def mostrarEquipe(self):
-    #     pass
-    #
-    # def inserirReparo(self):
-    #     pass
-    #
-    # def removerReparo(self):
-    #     pass
-    #
-    # def modificarReparo(self):
-    #     pass
-    #
-    # def mostrarReparo(self):
-    #     pass
-    #
-    # def inserirOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def removerOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def modificarOrdemDeTrabalho(self):
-    #     pass
-    #
-    # def mostrarOrdemDeTrabalho(self):
-    #     pass
-

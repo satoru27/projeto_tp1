@@ -6,6 +6,8 @@ from pathlib import Path
 
 from Endereco import Endereco
 
+from random import randint
+
 DEBUG_FLAG = True
 
 database = 'srcb.db'
@@ -39,12 +41,9 @@ class Reparo(OrdemDeTrabalho):
         ''')
         self.mostrar_ordem_de_trabalho()
 
-    def calcula_custo(self):
-        pass
-
     def inserir_reparo_db(self):
-        db_cursor.execute("SELECT * FROM reparo WHERE codigoReparo = :codigoReparo ",
-                          {'codigoReparo': self.codigoReparo})
+        db_cursor.execute("SELECT * FROM reparo WHERE identificador = :identificador ",
+                          {'identificador': self.identificador})
 
         lst = db_cursor.fetchall()
 
@@ -57,9 +56,9 @@ class Reparo(OrdemDeTrabalho):
                                'tamanho': self.tamanho, 'localizacao': self.localizacao, 'prioridade': self.prioridade,
                                'registradoPor': self.registradoPor, 'codigo': self.codigo, 'descricao': self.descricao,
                                'situacao': self.situacao, 'equipeDeReparo': self.equipeDeReparo,
-                               'equipamentos': ','.join(self.equipamentos), 'horasAplicadas': self.horasAplicadas,
+                               'equipamentos': self.equipamentos, 'horasAplicadas': self.horasAplicadas,
                                'codigoReparo': self.codigoReparo, 'descricaoReparo': self.descricaoReparo,
-                               'status': self.status, 'materialUtilizado': ','.join(self.materialUtilizado),
+                               'status': self.status, 'materialUtilizado': self.materialUtilizado,
                                'custo': self.custo
                                })
 
@@ -134,8 +133,9 @@ class Reparo(OrdemDeTrabalho):
     def atualizar_custo(self,novo_valor):
         self.custo = novo_valor
         with db_connection:
-            db_cursor.execute("UPDATE reparo SET custo = : custo WHERE identificador = :identificador",
+            db_cursor.execute("UPDATE reparo SET custo = :custo WHERE identificador = :identificador",
                               {'custo': self.custo, 'identificador': self.identificador})
 
     def calcula_custo(self):
-        pass
+        custo = randint(1, 99999)
+        return custo

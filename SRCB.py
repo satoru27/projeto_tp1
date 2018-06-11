@@ -40,7 +40,7 @@ class SRCB(object):
 
             '2': 'interface_funcionario',
 
-            '3': 'interface_cadastro_usuario'
+            '3': 'interface_cadastro_cidadao'
         }
 
         while(1):
@@ -388,7 +388,8 @@ class SRCB(object):
         lst = lst[0]
 
         equipamento = lst[10]
-        equipamento = equipamento.split(',')
+        if ',' in equipamento:
+            equipamento = equipamento.split(',')
 
         #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
@@ -414,10 +415,12 @@ class SRCB(object):
         lst = lst[0]
 
         equipamento = lst[10]
-        equipamento = equipamento.split(',')
+        if ',' in equipamento:
+            equipamento = equipamento.split(',')
 
         material = lst[15]
-        material = material.split(',')
+        if ',' in material:
+            material = material.split(',')
 
         #print(lst)
         # endereco, tamanho, localizacao, prioridade, registradoPor,
@@ -534,7 +537,7 @@ class SRCB(object):
 
             else:
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = self.valid_int_input()
+                novo_valor = input('> ')
                 try:
                     getattr(buraco, selection[option])(novo_valor)
                     print('> Valor atualizado!')
@@ -550,6 +553,8 @@ class SRCB(object):
         confirm = input('>> Deseja realmente excluir o buraco ? [S/s]')
         if confirm == 'S' or confirm == 's':
             buraco = self.retorna_buraco_bd(idBuraco)
+            if buraco is None:
+                return
             buraco.remover_buraco_db()
 
         print('Voltando...')
@@ -713,6 +718,8 @@ class SRCB(object):
 
         dano = Dano(tipoDeDano,pagamento,idBuraco,idCidadao)
 
+        user.atualizar_recebeuDano(True)
+
         dano.inserir_dano_db()
 
     def modificar_dano(self, user):
@@ -752,7 +759,7 @@ class SRCB(object):
 
             else:
                 print('>> Insira o novo valor do atributo: ')
-                novo_valor = self.valid_int_input()
+                novo_valor = input('> ')
                 try:
                     getattr(dano, selection[option])(novo_valor)
                     print('> Valor atualizado!')
@@ -802,9 +809,20 @@ class SRCB(object):
         self.consultar_danos(user)
 
     def gerar_relatorio(self,user):
-        self.realizar_consulta_geral(user)
-        #por enquanto assim ate definir a forma do relatorio
-        #fazer o mesmo retorno porem em um arquivo ?
+        db_cursor.execute("SELECT * FROM dano WHERE idCidadao = :idCidadao ",
+                          {'idCidadao': user.identificador})
+        lst = db_cursor.fetchall()
+
+        if not lst:
+            print(">> Nenhum dano encontrado")
+            return
+        dano_total = 0
+        for entry in lst:
+            dano = self.retorna_dano_bd(entry[0])
+            dano.mostrar_dano()
+            dano_total += int(dano.pagamento)
+
+        print(f'\t[Pagamento total = {dano_total} ]')
 
     def consultar_cadastro_funcionario(self, user):
         while 1:
@@ -822,7 +840,10 @@ class SRCB(object):
                 other_user = self.retorna_funcionario_bd(identificador)
                 if other_user is None:
                     other_user = self.retorna_cidadao_bd(identificador)
-                    other_user.mostrar_cadastro()
+                    if other_user is None:
+                        print('>> Cadastro nao encontrado')
+                    else:
+                        other_user.mostrar_cadastro()
                 else:
                     other_user.mostrar_cadastro_funcionario()
 
@@ -1045,6 +1066,9 @@ class SRCB(object):
         #with db_connection:
         db_cursor.execute("SELECT * FROM material WHERE codigo = :codigo",{'codigo':codigo})
         lst = db_cursor.fetchall()
+        if not lst:
+            print('>> Material nao encontrado')
+            return
         entry = lst[0]
         material = self.retorna_material_bd(entry[0])
         material.mostrar_material()
@@ -1190,6 +1214,10 @@ class SRCB(object):
         #with db_connection:
         db_cursor.execute("SELECT * FROM equipamento WHERE codigo = :codigo", {'codigo': codigo})
         lst = db_cursor.fetchall()
+        if not lst:
+            print('>> Equipamento nao encontrado')
+            return
+
         entry = lst[0]
         equipamento = self.retorna_equipamento_bd(entry[0])
         equipamento.mostrar_equipamento()
@@ -1248,7 +1276,7 @@ class SRCB(object):
                     print('> Valor atualizado!')
                 except KeyError:
                     print('Opcao invalida')
-                    
+
         # gera mudancas em ordem de trabalho
         print('Saindo do painel de atualizacao de equipamento...')
 
@@ -1333,6 +1361,11 @@ class SRCB(object):
         db_cursor.execute("SELECT * FROM equipeDeReparo WHERE identificador = :identificador",
                           {'identificador': identificador})
         lst = db_cursor.fetchall()
+
+        if not lst:
+            print('>> Equipe nao encontrada!')
+            return
+
         entry = lst[0]
         equipe_de_reparo = self.retorna_equipe_de_reparo_bd(entry[0])
         equipe_de_reparo.mostrar_equipe_de_reparo()
@@ -1351,7 +1384,7 @@ class SRCB(object):
         equipe.inserir_equipe_de_reparo_db()
 
     def modificar_equipe(self): # gera mudancas em ordem
-        identificador = input('>> Insira o identificador do material:\n> ')
+        identificador = input('>> Insira o identificador da equipe:\n> ')
         equipe = self.retorna_equipe_de_reparo_bd(identificador)
 
         if equipe is None:
@@ -1368,12 +1401,14 @@ class SRCB(object):
             temp = input('>> Insira o nome do integrante da equipe: ')
             funcionarios.append(temp)
 
+        funcionarios = ','.join(funcionarios)
+
         equipe.atualizar_numeroDePessoas(numero_de_pessoas)
         equipe.atualizar_funcionarios(funcionarios)
 
         self.equipe_modificada_atualiza_ordem(identificador_old)
-
-        print('Saindo do painel de atualizacao de equipamento...')
+        print('>> Equipe atualizada!')
+        print('>> Saindo do painel de atualizacao de equipamento...')
 
     def equipe_modificada_atualiza_ordem(self, identificador_equipe):
         db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE equipeDeReparo = :identificador ",
@@ -1469,6 +1504,9 @@ class SRCB(object):
         db_cursor.execute("SELECT * FROM ordemDeTrabalho WHERE identificador = :identificador",
                           {'identificador': identificador})
         lst = db_cursor.fetchall()
+        if not lst:
+            print('> Ordem nao encontrada')
+            return
         entry = lst[0]
         ordem = self.retorna_ordem_de_trabalho_bd(entry[0])
         ordem.mostrar_ordem_de_trabalho()
@@ -1601,6 +1639,7 @@ class SRCB(object):
             '2': 'registrar_reparo',
             '3': 'modificar_reparo',
             '4': 'excluir_reparo',
+            '5': 'calcula_custo_reparo'
         }
 
         while 1:
@@ -1609,12 +1648,13 @@ class SRCB(object):
                                  2) Registrar reparo
                                  3) Modificar reparo
                                  4) Excluir reparo
-                                 5) Sair
+                                 5) Calcular custo do reparo
+                                 6) Sair
                                  ''')
 
             option = input("> ")
 
-            if option == '5':
+            if option == '6':
                 break
             else:
                 try:
@@ -1661,6 +1701,9 @@ class SRCB(object):
         db_cursor.execute("SELECT * FROM reparo WHERE identificador = :identificador",
                           {'identificador': identificador})
         lst = db_cursor.fetchall()
+        if not lst:
+            print('>> Reparo nao encontrado')
+            return
         entry = lst[0]
         reparo = self.retorna_reparo_bd(entry[0])
         reparo.mostrar_reparo()
@@ -1675,12 +1718,14 @@ class SRCB(object):
 
         ordem = self.retorna_ordem_de_trabalho_bd(identificador_ordem)
 
+        #ordem.mostrar_ordem_de_trabalho()
+
         if ordem is None:
             print('> Ordem nao encontrada ')
             return
 
-        descricaoReparo = input('>> Insira a descricao da ordem de trabalho: ')
-        status = input('>> Insira a situacao da ordem de trabalho: ')
+        descricaoReparo = input('>> Insira a descricao do reparo: ')
+        status = input('>> Insira a situacao do reparo: ')
 
         print('>> Insira o numero de materiais utilizados: ')
         numero_de_materiais = self.valid_int_input()
@@ -1688,10 +1733,21 @@ class SRCB(object):
         for i in range(0, numero_de_materiais):
             temp = input('>> Insira o identificador do material: ')
             materialUtilizado.append(temp)
+        if len(materialUtilizado) > 1:
+            materialUtilizado = ','.join(materialUtilizado)
+        else:
+            materialUtilizado = materialUtilizado[0]
+
+        if not isinstance(ordem.equipamentos, str):
+            equipamentos = ','.join(ordem.equipamentos)
+        else:
+            equipamentos = ordem.equipamentos
 
         reparo = Reparo(ordem.endereco, ordem.tamanho, ordem.localizacao, ordem.prioridade, ordem.registradoPor,
-                        ordem.descricao, ordem.situacao, ordem.equipeDeReparo, ordem.equipamentos, ordem.horasAplicadas,
+                        ordem.descricao, ordem.situacao, ordem.equipeDeReparo, equipamentos, ordem.horasAplicadas,
                         descricaoReparo, status, materialUtilizado)
+
+        reparo.mostrar_reparo()
 
         reparo.inserir_reparo_db()
 
@@ -1699,7 +1755,7 @@ class SRCB(object):
         identificador = input('>> Insira o identificador do reparo:\n> ')
         reparo = self.retorna_reparo_bd(identificador)
         if reparo is None:
-            print('>> Reparo nao encontrado')
+            #print('>> Reparo nao encontrado')
             return
 
         selection = {
@@ -1764,6 +1820,21 @@ class SRCB(object):
         if confirm == 'S' or confirm == 's':
             reparo.remover_reparo_db()
             print('> Reparo excluido com sucesso')
+
+    def calcula_custo_reparo(self):
+        identificador = input('>> Insira o identificador do reparo: \n> ')
+        # with db_connection:
+        db_cursor.execute("SELECT * FROM reparo WHERE identificador = :identificador",
+                          {'identificador': identificador})
+        lst = db_cursor.fetchall()
+        if not lst:
+            print('>> Reparo nao encontrado')
+            return
+        entry = lst[0]
+        reparo = self.retorna_reparo_bd(entry[0])
+        custo = reparo.calcula_custo()
+        print(f'\t [ Custo total do reparo: {custo} ]')
+        reparo.atualizar_custo(custo)
 
     def int_input(self):
         while True:

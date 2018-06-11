@@ -74,7 +74,7 @@ class EquipeDeReparo(object):
     def atualizar_funcionarios(self, novo_valor):
         self.funcionarios = novo_valor
         with db_connection:
-            db_cursor.execute("UPDATE dano SET funcionarios = :funcionarios WHERE identificador = :identificador",
+            db_cursor.execute("UPDATE equipeDeReparo SET funcionarios = :funcionarios WHERE identificador = :identificador",
                               {'funcionarios': self.funcionarios, 'identificador': self.identificador})
 
         self.atualizar_identificador()

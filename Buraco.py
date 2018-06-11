@@ -86,7 +86,8 @@ class Buraco(object):
         self.endereco = novo_valor
         with db_connection:
             db_cursor.execute("UPDATE buraco SET endereco = :endereco WHERE identificador = :identificador",
-                              {'endereco': self.endereco, 'identificador': self.identificador})
+                              {'endereco': self.endereco.string_endereco(), 'identificador': self.identificador})
+        self.atualizar_identificador()
 
     def atualizar_tamanho(self, novo_valor):
         self.tamanho = novo_valor
